@@ -1,0 +1,24 @@
+[30-Jun-2011 15:14:23] PHP Warning:  require_once(C:\www\wordpress\wp-content\plugins/placesapi_config.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 10
+[30-Jun-2011 15:14:23] PHP Warning:  require_once(C:\www\wordpress\wp-content\plugins/placesapi_config.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 10
+[30-Jun-2011 15:14:23] PHP Stack trace:
+[30-Jun-2011 15:14:23] PHP Stack trace:
+[30-Jun-2011 15:14:23] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 15:14:23] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 15:14:23] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'C:\www\wordpress\wp-content\plugins/placesapi_config.php' (include_path='.;C:\php5\pear') in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 10
+[30-Jun-2011 15:14:23] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'C:\www\wordpress\wp-content\plugins/placesapi_config.php' (include_path='.;C:\php5\pear') in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 10
+[30-Jun-2011 15:14:23] PHP Stack trace:
+[30-Jun-2011 15:14:23] PHP Stack trace:
+[30-Jun-2011 15:14:23] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 15:14:23] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 13:14:42] PHP Warning:  include_once(C:\www\wordpress\wp-content\plugins/templates/custom/custom.html) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 46
+[30-Jun-2011 13:14:42] PHP Stack trace:
+[30-Jun-2011 13:14:42] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 13:14:42] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'C:\www\wordpress\wp-content\plugins/templates/custom/custom.html' for inclusion (include_path='.;C:\php5\pear') in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 46
+[30-Jun-2011 13:14:42] PHP Stack trace:
+[30-Jun-2011 13:14:42] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 13:14:42] PHP Warning:  include_once(C:\www\wordpress\wp-content\plugins/templates/custom/custom.html) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 46
+[30-Jun-2011 13:14:42] PHP Stack trace:
+[30-Jun-2011 13:14:42] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
+[30-Jun-2011 13:14:42] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening 'C:\www\wordpress\wp-content\plugins/templates/custom/custom.html' for inclusion (include_path='.;C:\php5\pear') in C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php on line 46
+[30-Jun-2011 13:14:42] PHP Stack trace:
+[30-Jun-2011 13:14:42] PHP   1. {main}() C:\www\wordpress\wp-content\plugins\nokia-places-plugin\tinymce\custom.php:0
