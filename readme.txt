@@ -32,7 +32,7 @@ For more information, check out [Nokia Maps & Places](https://projects.developer
 
 = Screencast =
 
-Click [here](http://www.youtube.com/watch?v=i0-CjbNOyPI&cc_load_policy=1) to watch a screencast.
+http://www.youtube.com/watch?v=i0-CjbNOyPI&cc_load_policy=1
 
 == Installation ==
 Just follow one of procedures described [here](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins). We recommend using [WordPress built-in installer](http://codex.wordpress.org/Administration_Panels#Add_New_Plugins). Remember to activate a plugin once it is installed.
