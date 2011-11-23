@@ -24,12 +24,12 @@ global $wpdb;
         <!--Insert core js and stylesheets -->
         <script type="text/javascript" src="http://api.maps.nokia.com/places/beta2/jsPlacesAPI.js"></script>
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-        <script src='<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-places-plugin/tinymce/colorbox/jquery.colorbox.js'></script>
-        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-places-plugin/page/js/core.js"></script>
+        <script src='<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/tinymce/colorbox/jquery.colorbox.js'></script>
+        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
         <script src="http://api.maps.nokia.com/2.0.0/jsl.js?routing=none&positioning=none" type="text/javascript" charset="utf-8"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-places-plugin/page/css/jquery-ui-1.8.16.custom.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-places-plugin/page/css/general.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-places-plugin/page/css/disableOptions.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/jquery-ui-1.8.16.custom.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/general.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/disableOptions.css" />
     </head>
     <body>
     <style>
