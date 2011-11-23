@@ -63,12 +63,12 @@
                             place_datas[i] = decodeURI(place_datas[i]);
                             //Make unique iframe and shortcode 
                             places_shortcode = '[nokia-maps template="'+templates[i]+'" place_data="'+place_datas[i]+'"]';
-                            places_iframe = '<iframe id="places_api_view'+i+'" width="506" frameborder="no" scrolling="no" src="'+base_url+'wp-content/plugins/nokia-places-plugin/page/'+templates[i]+'.php?place_data='+encodeURI(place_datas[i])+'&amp;iframeid='+i+'">IFRAMES not supported</iframe>';
+                            places_iframe = '<iframe id="places_api_view'+i+'" width="506" frameborder="no" scrolling="no" src="'+base_url+'wp-content/plugins/nokia-mapsplaces/page/'+templates[i]+'.php?place_data='+encodeURI(place_datas[i])+'&amp;iframeid='+i+'">IFRAMES not supported</iframe>';
                         }else{
                             //place_id
                             placeids[i] = string_match[i].replace( regexp, '$2' );	
                             places_shortcode = '[nokia-maps template="'+templates[i]+'" place="'+placeids[i]+'"]';
-                            places_iframe = '<iframe id="places_api_view'+i+'" width="506" frameborder="no" scrolling="no" src="'+base_url+'wp-content/plugins/nokia-places-plugin/page/'+templates[i]+'.php?placeid='+placeids[i]+'&amp;iframeid='+i+'">IFRAMES not supported</iframe>';
+                            places_iframe = '<iframe id="places_api_view'+i+'" width="506" frameborder="no" scrolling="no" src="'+base_url+'wp-content/plugins/nokia-mapsplaces/page/'+templates[i]+'.php?placeid='+placeids[i]+'&amp;iframeid='+i+'">IFRAMES not supported</iframe>';
                         }
                         
                         //Which way to replace
