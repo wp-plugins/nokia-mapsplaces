@@ -28,28 +28,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  */
 
 /**
- * add_placesapi_core
- * 
- * @package Nokia Places Plugin
- * Insert placesapi core Javascript files into wordpress except admin pages
- *
- */
-if (!is_admin()) {
-    wp_enqueue_script('placesapi', plugins_url('/placesapi/jsPlacesAPI.js', __FILE__));
-    wp_enqueue_script('placesapi_config', plugins_url('/placesapi/configuration.js', __FILE__), array('placesapi'));
-} else {
-    /**
-     * add_colorbox_core
-     * 
-     * @package Nokia Places Plugin
-     * Insert colorbox core Javascript files into admin pages
-     *
-     */
-    wp_register_script('colorbox', plugins_url('/tinymce/colorbox/jquery.colorbox.js', __FILE__), array('jquery'));
-    wp_enqueue_style('colorbox', plugins_url('/page/colorbox.css', __FILE__));
-}
-
-/**
  * get_nokiaplaces_url
  * 
  * @package Nokia Places Plugin
