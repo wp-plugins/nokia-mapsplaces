@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   Plugin Name: Nokia Maps Places
   Plugin URI: http://api.maps.nokia.com/places/
   Description: With this plugin you are able to add a places and addresses into a post or a page.
-  Version: 1.0.0
+  Version: 1.0.1
   Author: Nokia Corporation
   Author Email: marek.krysiuk@nokia.com
   License: BSD License
