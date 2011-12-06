@@ -87,12 +87,12 @@ global $wpdb;
                     <h5>Display</h5>
                     <div class="contentLeft checkboxContainer">
                         <div rel="actions"><input type="checkbox" name="elements" value="actions"> Actions</div>
-                        <div rel="contact"><input type="checkbox" name="elements" value="contact"> Contact</div>
+                        <div rel="contact"><input type="checkbox" name="elements" value="contact"> Contact info</div>
                         <div rel="description"><input type="checkbox" name="elements" value="description"> Description</div>
                         <div rel="reviews"><input type="checkbox" name="elements" value="reviews"> Reviews</div>
-                        <div rel="thumbnail"><input type="checkbox" name="elements" value="thumbnail"> Thumbnail</div>
+                        <div rel="thumbnail"><input type="checkbox" name="elements" value="thumbnail"> Photo</div>
                         <div rel="thumbnailList"><input type="checkbox" name="elements" value="thumbnailList"> Thumbnail list</div>
-                        <div rel="controls"><input type="checkbox" name="elements" value="controls"> Controls</div>
+                        <div rel="controls"><input type="checkbox" name="elements" value="controls"> Map zoom</div>
                     </div>
                     <div class="contentRight">
 <!--
@@ -115,7 +115,7 @@ global $wpdb;
             </div>
             
             <a type="button" class="button" id="cancelAction">Cancel</a>
-            <a type="button" class="button-primary" id="insertAction">Insert this place</a>
+            <a type="button" class="button-primary" id="insertAction">Finish</a>
             
         </div>
     </div>
