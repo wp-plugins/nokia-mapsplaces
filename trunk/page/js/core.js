@@ -36,10 +36,7 @@ jQuery( document ).ready( function(){
     }
     
     var sizes = [
-        {width: 'auto', height: 370, label: 'Auto'},
-        {width: 640, height: 370},
-        {width: 850, height: 480},
-        {width: 1280, height: 725}
+        {width: 'auto', height: 370, label: 'Use blog size'}
     ],
         activeTemplate,
         activeSize;
