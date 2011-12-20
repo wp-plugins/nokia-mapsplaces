@@ -103,10 +103,10 @@ global $wpdb;
                 </div>
                 <div class="tab">
                     <h5>Size</h5>
-                    <div class="contentLeft sizes">
-                        <input id="customSizeWidth" type="text" name="width" value="width" class="labelText"> x <input id="customSizeHeight" type="text" name="height" value="height" class="labelText"> pixels 
+                    <div class="contentLeft  fixedSizes" id="fixedSizes">
                     </div>
-                    <div class="contentRight fixedSizes" id="fixedSizes">
+                    <div class="contentRight sizes">
+                        <input id="customSizeWidth" type="text" name="width" value="width" class="labelText"> x <input id="customSizeHeight" type="text" name="height" value="height" class="labelText"> pixels 
                     </div>
                 </div>
 

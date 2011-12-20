@@ -246,7 +246,10 @@ h1 {
     display: block;
 }
 .tab .sizes{
+    border-left: 1px solid #DDDDDD;
     margin: 5px 0;
+    padding-left: 20px;
+    width: 408px;
 }
 .tab .fixedSizes a.active{
     color: #FFF;
