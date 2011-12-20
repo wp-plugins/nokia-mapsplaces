@@ -239,7 +239,6 @@ jQuery( document ).ready( function(){
     var loadMap = function(){
         var components = [
             new nokia.maps.map.component.Behavior(),
-//            new nokia.maps.map.component.TypeSelector(),
             new nokia.maps.map.component.ZoomBar()
         ];
 
