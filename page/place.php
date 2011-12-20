@@ -31,7 +31,7 @@ if($_GET['place_data_params']){
         <!--Insert unique frameid for resize function -->
         <meta id="iframeid" content="<?php echo $_GET['iframeid'] ?>"/>
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta2/jsPlacesAPI.js"></script>
+        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
         <script src="http://api.maps.nokia.com/2.0.0/jsl.js?routing=none&positioning=none" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/disableOptions.css" />
         <style>

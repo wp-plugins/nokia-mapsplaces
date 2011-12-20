@@ -256,3 +256,47 @@ h1 {
     color: #aaa;
     font-style: italic;
 }
+
+
+/*
+    dark category icons
+*/
+.nokia-blue-categoryicon-dark-Accomodation {
+    background-position: 0 -60px;
+}
+.nokia-blue-categoryicon-dark-Address {
+    background-position: 0 -5px;
+}
+.nokia-blue-categoryicon-dark-AreasInfrastructure {
+    background-position: 0 -985px;
+}
+.nokia-blue-categoryicon-dark-Automotive {
+    background-position: 1px -440px;
+}
+.nokia-blue-categoryicon-dark-BusinessServices {
+    background-position: 0 -115px;
+}
+.nokia-blue-categoryicon-dark-EatDrink {
+    background-position: -1px -168px;
+}
+.nokia-blue-categoryicon-dark-Facility {
+    background-position: 0 -223px;
+}
+.nokia-blue-categoryicon-dark-GoingOut {
+    background-position: 0 -277px;
+}
+.nokia-blue-categoryicon-dark-Leisure {
+    background-position: 0 -659px;
+}
+.nokia-blue-categoryicon-dark-NatureGeography {
+    background-position: 0 -1039px;
+}
+.nokia-blue-categoryicon-dark-Shopping {
+    background-position: -1px -767px;
+}
+.nokia-blue-categoryicon-dark-SightsMuseums {
+    background-position: 0 -387px;
+}
+.nokia-blue-categoryicon-dark-Transport {
+    background-position: 0 -1094px;
+}

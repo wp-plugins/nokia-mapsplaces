@@ -22,7 +22,7 @@ global $wpdb;
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--Insert core js and stylesheets -->
-        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta2/jsPlacesAPI.js"></script>
+        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
         <script src='<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/tinymce/colorbox/jquery.colorbox.js'></script>
         <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
