@@ -202,7 +202,7 @@ jQuery( document ).ready( function(){
     var removeLabelText = function(){
         this.value = "";
         jQuery(this).removeClass('labelText');
-        jQuery(this).unbind('focus');
+//        jQuery(this).unbind('focus');
         
         jQuery('#fixedSizes .active').removeClass('active');
         activeSize = false;
