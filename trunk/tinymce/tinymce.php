@@ -29,19 +29,6 @@ class nokia_places_core {
         return sprintf($context, $placesApi_media_button);
     }
 
-    /**
-     * 
-     * Load the TinyMCE plugin : editor_plugin.js
-     * 
-     * @return $plugin_array
-     */
-    function add_tinymce_plugin($plugin_array) {
-
-        $plugin_array[$this->pluginname] = $this->path . 'editor_plugin.js';
-
-        return $plugin_array;
-    }
-
     function add_nokiaplaces_core() {
 
         // Don't bother doing this stuff if the current user lacks permissions
