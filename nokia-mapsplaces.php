@@ -27,6 +27,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   License: BSD License
  */
 
+include_once (dirname(__FILE__) . '/widget.php');
+
+
 /**
  * get_nokiaplaces_url
  * 
@@ -46,7 +49,7 @@ function nokiaplaces_url($path = '') {
     return plugins_url($path, __FILE__);
 }
 
-include_once ( dirname(__FILE__) . '/tinymce/tinymce.php' );
+include_once (dirname(__FILE__) . '/tinymce/tinymce.php');
 
 /**
  * allow_iframe
@@ -69,15 +72,14 @@ add_filter('tiny_mce_before_init', 'add_iframe');
  */
 // [nokia-maps template="template" place="placeId"]
 //or [nokia-maps template="template" place_data="jsonObject"]
-function nokia_place_shortcode($atts) {
-    
+function nokia_place_shortcode($atts, $c) {
     $map = array(
         'placeid' => '',
         'place_data_params' => '',
         'template' => '',
         'sizes' => '',
         'display_options' => '',
-    );
+   );
     
     if($atts['place_data_params']){
         for($i = 1; $i <= $atts['place_data_params']; $i++){
@@ -87,10 +89,10 @@ function nokia_place_shortcode($atts) {
     
     $atts = shortcode_atts($map, $atts);
     $str = http_build_query($atts);
-    
     preg_match("#height':\s?'(\d+)'#", $atts['sizes'], $size);
     
     $insert_code = create_nokia_places_post($str, $size[1]);
+    
     return $insert_code;
 }
 
@@ -109,14 +111,5 @@ function create_nokia_places_post($query, $height) {
     return "<iframe id='places_api_view{$frame_id}' frameborder='no' scrolling='no' height='{$height}' width='100%' src='".get_option('siteurl')."/wp-content/plugins/nokia-mapsplaces/page/place.php?{$query}&amp;iframeid={$frame_id}'>IFRAMES not supported</iframe>";
 }
 
-/**
- * insert_custom_template_div
- * 
- * @package Nokia Places Plugin
- * 
- */
-function insert_custom_template() {
-    include_once ( dirname(__FILE__) . '/templates/custom/custom.html' );
-}
 
 ?>

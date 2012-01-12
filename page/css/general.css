@@ -81,6 +81,15 @@ h1 {
     background: #FFF;
 }
 
+.layoutCompact #placeWidget{
+    width: 234px;
+}
+
+.layoutCompact #placeWidget,
+.layoutCompact #placeWidget .nokia-places-blue-map .nokia-place-map-container{
+    height: 180px;
+}
+
 #searchBox{
     width: 450px;
 }
@@ -193,6 +202,9 @@ h1 {
     height: 34px;
     background: url('../images/layout.png') no-repeat;
 }
+.tab #layoutOptions li#layoutCompact{
+    background-position: -204px 0;
+}
 .tab #layoutOptions li#layoutMap{
     background-position: 0 0;
 }
@@ -204,6 +216,9 @@ h1 {
 }
 .tab #layoutOptions li#layoutFull{
     background-position: -153px 0;
+}
+.tab #layoutOptions li#layoutCompact.active{
+    background-position: -204px -40px;
 }
 .tab #layoutOptions li#layoutMap.active{
     background-position: 0 -40px;

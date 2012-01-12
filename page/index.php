@@ -23,8 +23,8 @@ global $wpdb;
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--Insert core js and stylesheets -->
         <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
+
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-        <script src='<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/tinymce/colorbox/jquery.colorbox.js'></script>
         <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
         <script src="http://api.maps.nokia.com/2.0.0/jsl.js?routing=none&positioning=none" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/jquery-ui-1.8.16.custom.css" />
@@ -43,9 +43,6 @@ global $wpdb;
         <div id="headerStep1">
             <h1>Search for the place or address</h1>
             <div id="searchBox"></div>
-<!--
-            <a id="createPlace">Create your own place</a>
--->
         </div>
         <div id="headerStep2" class="hidden">
             <h1>Customize your map</h1>
@@ -63,10 +60,11 @@ global $wpdb;
                 
             <div class="settings">
 
-                <div class="tab">
+                <div id="layoutTab" class="tab">
                     <h5>Layout</h5>
                     <div class="contentLeft">
                         <ul id="layoutOptions">
+                            <li id="layoutCompact" rel="nokia.blue.compact"></li>
                             <li id="layoutMap" rel="nokia.blue.map"></li>
                             <li id="layoutBasic" class="active" rel="nokia.blue.place"></li>
                             <li id="layoutAdvanced" rel="nokia.blue.extended"></li>
@@ -92,7 +90,7 @@ global $wpdb;
                         <div rel="reviews"><input type="checkbox" name="elements" value="reviews"> Reviews</div>
                         <div rel="thumbnail"><input type="checkbox" name="elements" value="thumbnail"> Photo</div>
                         <div rel="thumbnailList"><input type="checkbox" name="elements" value="thumbnailList"> Thumbnail list</div>
-                        <div rel="controls"><input type="checkbox" name="elements" value="controls"> Map zoom</div>
+                        <div rel="controls"><input type="checkbox" name="elements" value="controls"> Map controls</div>
                     </div>
                     <div class="contentRight">
 <!--
