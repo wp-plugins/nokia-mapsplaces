@@ -10,7 +10,12 @@
 */
 jQuery( document ).ready( function(){
 
+    var widget = window.location.search.match(/widgetMode=([^&]+)/);
+
     var displayOptions = {
+        "nokia.blue.compact": [
+            'actions',
+        ],
         "nokia.blue.map": [
             'controls'
         ],
@@ -43,15 +48,15 @@ jQuery( document ).ready( function(){
 
     var showPlaceWidget = function(){
         jQuery('#headerStep2, #placeWidgetContainer').removeClass('hidden');
-        jQuery('#headerStep1').addClass('hidden');
+        jQuery('#map, #placeList, #headerStep1').addClass('hidden');
         jQuery('#wrapper').removeClass('mapEnabled');
     }
 
     var hidePlaceWidget = function(){
-        setLayout.call(jQuery('#layoutOptions li')[1]);
+        setLayout.call(jQuery('#layoutOptions li')[2]);
         
         jQuery('#headerStep2, #placeWidgetContainer').addClass('hidden');
-        jQuery('#headerStep1').removeClass('hidden');
+        jQuery('#map, #placeList, #headerStep1').removeClass('hidden');
         jQuery('#wrapper').addClass('mapEnabled');
     }
 
@@ -123,7 +128,10 @@ jQuery( document ).ready( function(){
             
         }
         else{
-            size = renderJSON(sizes[activeSize]);
+            size = renderJSON({
+                width: sizes[activeSize].width,
+                height: (jQuery('#layoutOptions li#layoutCompact').hasClass('active') ? 180 : sizes[activeSize].height) 
+            });
         }
         
         var options = {
@@ -155,9 +163,21 @@ jQuery( document ).ready( function(){
             tagtext += i+'="'+options[i]+'" ';
         }
         tagtext += '] ';
-
-        
-        win.send_to_editor(tagtext);
+                    
+        if(widget && widget[1]){
+            var node = win.document.getElementById(widget[1]);
+            node.value = tagtext;
+            
+            if(node){
+                var saveBtn = jQuery(node.parentNode.parentNode.parentNode).find('#savewidget');
+                if(saveBtn){
+                    saveBtn.trigger('click');
+                }
+            }
+        }
+        else{
+            win.send_to_editor(tagtext);
+        }
 
         closeOverlayWindow();
         return;
@@ -168,8 +188,12 @@ jQuery( document ).ready( function(){
     }
 
     var setLayout = function(){
+        var activeId = jQuery('#layoutOptions li.active')[0].id;
+        jQuery('#placeWidgetContainer').removeClass(activeId);
+        jQuery('#placeWidgetContainer').addClass(this.id);
+        
         jQuery('#layoutOptions li').removeClass('active');
-       
+
         jQuery(this).addClass('active');
         activeTemplate = this.getAttribute('rel');
         placeWidget.setTemplate(activeTemplate, null, null, true);
@@ -381,7 +405,14 @@ jQuery( document ).ready( function(){
     
     fillSizes();
     activateSize.call(jQuery('#fixedSizes a')[0]);
-    setLayout.call(jQuery('#layoutOptions li.active')[0]);
+    
+    if(widget){
+        setLayout.call(jQuery('#layoutOptions li#layoutCompact')[0]);
+        jQuery('#layoutTab').addClass('hidden');
+    }
+    else{
+        setLayout.call(jQuery('#layoutOptions li#layoutBasic')[0]);
+    }
     
 });
 //end of document ready
