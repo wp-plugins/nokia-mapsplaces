@@ -48,6 +48,12 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 5. Nokia Maps&Places widget in a post
 
 == Changelog ==
+= 1.3.0 =
+* Added widget option, so you can put address or place in your blog sidebar.
+* Switched to new JS Places API (beta3).
+* Aligned plugin version number with JS Places API.
+* New compact template to use.
+* Code cleanup, minor improvements and fixes.
 = 1.0.2 =
 * Fixed iframe url on frontend side - always use get_option('siteurl')
 * New labels for Add place popup: display options (Customize your map) 
