@@ -175,7 +175,9 @@ jQuery( document ).ready( function(){
             node.value = tagtext;
             
             if(node){
-                var saveBtn = jQuery(node.parentNode.parentNode.parentNode).find('#savewidget');
+                var saveId = widget[1].replace('placeData', 'savewidget');
+                
+                var saveBtn = jQuery(node.parentNode.parentNode.parentNode).find('#savewidget, #'+saveId);
                 if(saveBtn){
                     saveBtn.trigger('click');
                 }
