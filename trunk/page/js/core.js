@@ -355,7 +355,7 @@ jQuery( document ).ready( function(){
             perPage: 4,
             onRenderPage: function(){
                 placeList.displayOnMap();
-                document.getElementById('placeList').style.display = 'block';
+                jQuery('#placeList').removeClass('hidden');
             },
             events: [
             {
