@@ -14,7 +14,8 @@ jQuery( document ).ready( function(){
 
     var displayOptions = {
         "nokia.blue.compact": [
-            'actions',
+            'contact',
+            'actions'
         ],
         "nokia.blue.map": [
             'controls'
