@@ -53,7 +53,7 @@ global $wpdb;
         <div id="placeContainer">
             
             
-            <div id="placeList"></div>
+            <div id="placeList" class="hidden"></div>
             <div id="map"></div>
             <div id="placeWidgetContainer" class="hidden">
                 <div id="placeWidget"></div>
