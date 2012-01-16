@@ -15,7 +15,12 @@
     display: none;
 }
 
-
+/**
+* Some additions
+**/
 .nokia-places-blue-compact h2.nokia-place-name {
     overflow: hidden;    
+}
+.nokia-places-blue-sharemenu .nokia-place-share-container input{
+    width: 40%;
 }
