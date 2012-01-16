@@ -54,7 +54,12 @@ jQuery( document ).ready( function(){
     }
 
     var hidePlaceWidget = function(){
-        setLayout.call(jQuery('#layoutOptions li')[2]);
+        if(widget){
+          setLayout.call(jQuery('#layoutOptions li#layoutCompact')[0]);
+        }
+        else{
+          setLayout.call(jQuery('#layoutOptions li#layoutBasic')[0]);
+        }
         
         jQuery('#headerStep2, #placeWidgetContainer').addClass('hidden');
         jQuery('#map, #placeList, #headerStep1').removeClass('hidden');
