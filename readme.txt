@@ -3,7 +3,7 @@ Contributors: Skowron, radek.adamczyk, marekkrysiuk, time4ostry
 Tags: geo,	maps, mapping, nokia, cross-browser, widget, places, nokia maps
 Requires at least: 2.9
 Tested up to: 3.3
-Stable tag: 1.0.2
+Stable tag: 1.3.0
 
 With Nokia Maps & Places plugin you can easily add places and addresses into your Wordpress posts or pages.
 
@@ -49,11 +49,9 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 
 == Changelog ==
 = 1.3.0 =
-* Added widget option, so you can put address or place in your blog sidebar.
-* Switched to new JS Places API (beta3).
-* Aligned plugin version number with JS Places API.
+* Support for sidebar widgets.
 * New compact template to use.
-* Code cleanup, minor improvements and fixes.
+* Bug fixes.
 = 1.0.2 =
 * Fixed iframe url on frontend side - always use get_option('siteurl')
 * New labels for Add place popup: display options (Customize your map) 
