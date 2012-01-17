@@ -46,9 +46,13 @@ class NokiaMapsPlacesWidget extends WP_Widget {
             $path = nokiaplaces_url();
             ?>
             <p>
-            <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
-            <a id='add_place' style="text-decoration: none;" href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' class='thickbox' alt='foo' title='Add a map - Powered by Nokia'><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
+                <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
+                <a id='add_place' style="text-decoration: none;" href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' class='thickbox thickbox<?php echo $this->get_field_id('placeData'); ?>' alt='foo' title='Add a map - Powered by Nokia'><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
             </p>
+            <script type="text/javascript">
+                tb_init('a.thickbox<?php echo $this->get_field_id('placeData'); ?>');// Needed for WP 2.9
+            </script>
+            
             <?php 
 	}
         
