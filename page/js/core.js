@@ -177,7 +177,7 @@ jQuery( document ).ready( function(){
             if(node){
                 var saveId = widget[1].replace('placeData', 'savewidget');
                 
-                var saveBtn = jQuery(node.parentNode.parentNode.parentNode).find('#savewidget, #'+saveId);
+                var saveBtn = jQuery(node.parentNode.parentNode.parentNode).find('input[name=savewidget]');  //, #savewidget, #'+saveId
                 if(saveBtn){
                     saveBtn.trigger('click');
                 }
@@ -212,8 +212,10 @@ jQuery( document ).ready( function(){
         for(var i = 0, l = options.length; i < l; i++){
             jQuery('.checkboxContainer div[rel=' + options[i] + ']').removeClass('hidden');
             checkbox = jQuery('.checkboxContainer input[value=' + options[i] + ']')[0];
-            checkbox.checked = true;
-            toogleDisplayOption.call(checkbox)
+            if(checkbox){
+                checkbox.checked = true;
+                toogleDisplayOption.call(checkbox)
+            }
         }
     }
     
@@ -347,7 +349,7 @@ jQuery( document ).ready( function(){
                     iconUrl: 'images/pin.png'
                 }
             },
-            template: 'nokia.blue.place'
+            template: widget ? 'nokia.blue.compact' : 'nokia.blue.place'
         });
 
         var placeList = new nokia.places.PlaceList({
