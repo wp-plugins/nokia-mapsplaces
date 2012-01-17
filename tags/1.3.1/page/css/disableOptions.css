@@ -1,0 +1,32 @@
+.no-controls .nokia-place-map a.nokia-place-tile-switch,
+.no-controls .nokia-place-map a.nokia-place-zoom-in,
+.no-controls .nokia-place-map a.nokia-place-zoom-out{
+    display: none;
+}
+.no-contact .nokia-place-contact{
+    display: none;
+}
+.no-thumbnail .extended-img-preview{
+    display: none;
+    visibility: hidden;
+}
+.no-actions .nokia-place-sharemenu,
+.no-actions .nokia-places-blue-sharemenu{
+    display: none;
+}
+
+/**
+* Some additions
+**/
+#placeContainer .nokia-places-blue-compact h2.nokia-place-name,
+#content .nokia-places-blue-compact h2.nokia-place-name {
+    overflow: hidden;    
+}
+#placeContainer .nokia-places-blue-sharemenu .nokia-place-share-container input,
+#content .nokia-places-blue-sharemenu .nokia-place-share-container input{
+    width: 40%;
+}
+#placeContainer .nokia-places-blue-compact .nokia-blue-categoryicon,
+#content .nokia-places-blue-compact .nokia-blue-categoryicon{
+    height: 17px;
+}
