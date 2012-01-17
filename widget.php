@@ -33,15 +33,23 @@ class NokiaMapsPlacesWidget extends WP_Widget {
             $this->displayWidget($instance);
             $placeData = esc_attr($instance['placeData']);
             
+            // Below 3.0 there was problem with opening thickbox for DOM elements
+            // added after DOMReady. To workaround that issue we are directly 
+            // calling tb_show() function.
+            // From WP 3.0 and newer it is enough to add thickbox class
+            if (version_compare($wp_version, '3.0', '<')) {
+                $thinbox = 'onclick="tb_show(this.title,this.href,false); return false;"';
+            }
+            else{
+                $thinbox = 'class="thickbox"';
+            }
+            
             $path = nokiaplaces_url();
             ?>
             <p>
                 <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
-                <a id='add_place' style="text-decoration: none;" href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' class='thickbox thickbox<?php echo $this->get_field_id('placeData'); ?>' alt='foo' title='Add a map - Powered by Nokia'><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
+                <a id='add_place' style="text-decoration: none;" <?php echo $thinbox; ?> href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' title='Add a map - Powered by Nokia'><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
             </p>
-            <script type="text/javascript">
-                tb_init('a.thickbox<?php echo $this->get_field_id('placeData'); ?>');// Needed for WP 2.9
-            </script>
             
             <?php 
 	}
