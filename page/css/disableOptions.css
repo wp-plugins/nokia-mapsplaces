@@ -18,12 +18,15 @@
 /**
 * Some additions
 **/
-.nokia-places-blue-compact h2.nokia-place-name {
+#placeContainer .nokia-places-blue-compact h2.nokia-place-name,
+#content .nokia-places-blue-compact h2.nokia-place-name {
     overflow: hidden;    
 }
-.nokia-places-blue-sharemenu .nokia-place-share-container input{
+#placeContainer .nokia-places-blue-sharemenu .nokia-place-share-container input,
+#content .nokia-places-blue-sharemenu .nokia-place-share-container input{
     width: 40%;
 }
-.nokia-places-blue-compact .nokia-blue-categoryicon{
+#placeContainer .nokia-places-blue-compact .nokia-blue-categoryicon,
+#content .nokia-places-blue-compact .nokia-blue-categoryicon{
     height: 17px;
 }
