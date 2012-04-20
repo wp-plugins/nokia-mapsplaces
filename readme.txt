@@ -1,6 +1,6 @@
 === Nokia Maps & Places ===
 Contributors: Skowron, radek.adamczyk, marekkrysiuk, time4ostry
-Tags: geo,	maps, mapping, nokia, cross-browser, widget, places, nokia maps
+Tags: geo, location, maps, mapping, nokia, cross-browser, widget, places, nokia maps, address
 Requires at least: 2.9
 Tested up to: 3.3
 Stable tag: 1.3.1
@@ -11,9 +11,8 @@ With Nokia Maps & Places plugin you can easily add places and addresses into you
 
 = Nokia Maps for Your Blog =
 
-Nokia Maps & Places is a plugin powered by [Nokia JS Places API](http://api.maps.nokia.com/places/). Add it to your blog to share information about your favorite places and to display maps.
+Nokia Maps & Places is a plugin powered by [Nokia Maps API](http://api.maps.nokia.com/en/places/intro.html). Add it to your blog to share information about your favorite places and to display maps.
 
-For more information, check out [Nokia Maps & Places](http://wordpress.org/extend/plugins/nokia-mapsplaces/).
 = Features =
 
 * Easy to install: no need for additional configuration, adds a button to media insert/upload section
@@ -48,6 +47,16 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 5. Nokia Maps&Places widget in a post
 
 == Changelog ==
+= 1.4.0 =
+* Nokia Maps API (2.2.0) used to generate Map and Places information
+* Introducing common identifier for both Places and Addresses (href parameter in shortcode)
+* Zoom level and tile type are persistent (during place layout selection, changing zoom level or tile type will reflect in final Place/Address display) 
+* Fixed Layout issues for place/address selection wizard
+* Templates for place/address selection wizard are part of the plugin bundle
+* Numbers added to result list items will reflect the numbered pins shown on the map
+* Fixed layout issues for results with small amount of data
+* Improved pin positioning within place's templates
+* 'Results not found' are communicated to the user
 = 1.3.1 =
 * CSS bug fix
 = 1.3.0 =
