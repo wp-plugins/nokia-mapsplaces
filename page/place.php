@@ -9,7 +9,7 @@
 //include wp-load.php
 require_once(dirname(dirname(__FILE__)) . '/placesapi_config.php');
 //Check GET
-if ((false === isset($_GET['placeid']) && false === isset($_GET['place_data'])) || false === isset($_GET['iframeid'])) {
+if ((false === isset($_GET['placeid']) && false === isset($_GET['place_data']) && false === isset($_GET['href'])) || false === isset($_GET['iframeid'])) {
     wp_die(__("Not enough data"));
 }
 
@@ -32,9 +32,9 @@ if($_GET['place_data_params']){
         <meta id="iframeid" content="<?php echo $_GET['iframeid'] ?>"/>
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 
-        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
+        <script src="http://api.maps.nokia.com/2.2.0/jsl.js?with=places,maps" type="text/javascript"></script>
         
-        <script src="http://api.maps.nokia.com/2.0.0/jsl.js?routing=none&positioning=none" type="text/javascript" charset="utf-8"></script>
+        
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/disableOptions.css" />
         <style>
             body{
@@ -48,17 +48,55 @@ if($_GET['place_data_params']){
         <div id='content'><div id='placewidget'></div></div>
 
         <script type='text/javascript'>
-            
+			// Center offsets for templates
+			// To be removed when passing zoomLevel and tileType parameters do not overwrite other module params (like standard offsets)
+			var templateOffsets = {
+			"nokia.blue.place": {
+								place:{
+									x: 0,
+									y: -124
+								},
+								address:{
+									x: 0,
+									y: -100
+								}
+							},
+			"nokia.blue.extended": {
+                        place:{
+                            x: 250,
+                            y: 0
+                        },
+                        address:{
+                            x: 250,
+                            y: 0
+                        }
+                    },
+
+			"nokia.blue.compact": {
+                        place:{
+                            x: 0,
+                            y: 45
+                        },
+                        address:{
+                            x: 0,
+                            y: 45
+                        }
+                    }
+
+			}
+            var template = "<?php echo $_GET['template'] ?>";
+
             var data = {
+				"template": template,
                 <?php
-                if($_GET['placeid']) echo "placeId: '{$_GET['placeid']}',\n";
+				$placeHref = $_GET['href'];
+				if ($placeHref) echo "href: '".html_entity_decode($placeHref)."',\n";
+                else if($_GET['placeid']) echo "placeId: '{$_GET['placeid']}',\n";
                 if($place_data) echo "place_data: {$place_data},\n";
-                echo "template: '{$_GET['template']}',\n";
                 echo "sizes: ".stripslashes($_GET['sizes']).",\n";
                 echo "displayOptions: '{$_GET['display_options']}'\n";
                 ?>
             }
-
             if('auto' === data.sizes.width){
                 var iframeid = document.getElementById('iframeid').getAttribute('content');
                 var placesIframe = parent.document.getElementById('places_api_view'+iframeid);
@@ -73,15 +111,21 @@ if($_GET['place_data_params']){
                 if(data.displayOptions){
                     document.getElementById('placewidget').className = data.displayOptions;
                 }
-
-                var place = new nokia.places.Place({
+                nokia.places.settings.setAppContext({appId: 'I5YGccWtqlFgymFvzbq1', authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg'});  //remove
+                var place = new nokia.places.widgets.Place({
                     targetNode: 'placewidget',
                     template: data.template,
                     placeId: data.placeId,
+					href: data.href,
                     moduleParams: {
                         'Map': {
-                            iconUrl: 'images/pin.png'
-                        }
+                            iconUrl: 'images/pin.png',
+							centerOffset: templateOffsets[template]
+				<?php 
+					if ($_GET['zoomlevel']) echo ", zoom: {$_GET['zoomlevel']}";
+					if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
+				?>
+                       }
                     },
                     onReady: function(){
                         if(data.place_data){

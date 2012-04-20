@@ -4,7 +4,7 @@
 Copyright (c) 2011 Nokia Corporation and/or its subsidiary(-ies).*
 All rights reserved.
 
-Contact:  Nokia Corporation marek.krysiuk@nokia.com
+Contact:  Nokia Corporation radoslaw.adamczyk@nokia.com
 
 You may use this file under the terms of the BSD license as follows:
 
@@ -21,9 +21,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   Plugin Name: Nokia Maps Places
   Plugin URI: http://wordpress.org/extend/plugins/nokia-mapsplaces/
   Description: With this plugin you are able to add a places and addresses into a post or a page.
-  Version: 1.3.1
+  Version: 1.4.0
   Author: Nokia Corporation
-  Author Email: marek.krysiuk@nokia.com
+  Author Email: radoslaw.adamczyk@nokia.com
   License: BSD License
  */
 
@@ -75,10 +75,13 @@ add_filter('tiny_mce_before_init', 'add_iframe');
 function nokia_place_shortcode($atts, $c) {
     $map = array(
         'placeid' => '',
+		'href' => '',
         'place_data_params' => '',
         'template' => '',
         'sizes' => '',
         'display_options' => '',
+	 'tiletype' => '',
+	 'zoomlevel' => ''
    );
     
     if($atts['place_data_params']){
