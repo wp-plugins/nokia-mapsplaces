@@ -22,18 +22,78 @@ global $wpdb;
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--Insert core js and stylesheets -->
-        <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
-
-        <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
-        <script src="http://api.maps.nokia.com/2.0.0/jsl.js?routing=none&positioning=none" type="text/javascript" charset="utf-8"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/general.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/disableOptions.css" />
+<link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/wordpress.css" />
+
+<script id="nokia-maps_searchbox" type="text/template">
+	<div module="SearchBox" class="nokia-searchbox">
+		<input class="nokia-searchbox-input" type="text" rel="searchbox-input"/>
+		<input class="nokia-searchbox-button" type="button" rel="searchbox-button" value="___places.search___"/>
+		<div rel="searchbox-list" class="nokia-searchbox-list">
+			<div class="nokia-searchbox-list-border"></div>
+		</div>
+	</div>
+</script>
+
+<script id="nokia-maps_resultlist-old" type="text/template">
+	<div module="List">
+        <ul each="{results.items}" rel="list-data" class="nokia-place-list">
+            <li class="nokia-place-list-elem" rel="nokia-place-name">
+				<div class="nokia-blue-category-pin">
+					<div class="nokia-blue-categoryicon">
+						<img url="{category.icon}.web.category_symbols.png" />
+					</div>
+				</div>
+				<p fill="{title}" class="nokia-place-name"></p>
+                <div class="nokia-place-address" fill="{vicinity}"></div>
+                    <span class="nokia-wordpress-preview-label">Select this place</span>
+            </li>
+        </ul>
+        <div rel="list-pagination"></div>
+    </div>
+</script>
+
+<script id="nokia-maps_resultlist" type="text/template">
+	<div module="List">
+        <ul each="{results.items}" rel="list-data" class="nokia-place-list">
+            <li class="nokia-place-list-elem" rel="nokia-place-name">
+				<div class="nokia-list-elem-left">
+					<div class="nokia-blue-category-pin">
+                            <span class="nokia-wordpress-list-index" addClass="{indexDigits()}" fill="{_index}"></span>
+                     </div>
+                     <div class="nokia-blue-categoryicon"><img url="{category.icon}.web.category_symbols.png" /></div>
+				</div>
+				<p fill="{title}" class="nokia-place-name"></p>
+                <div class="nokia-place-address" fill="{vicinity}"></div>
+                    <span class="nokia-wordpress-preview-label">Select this place</span>
+            </li>
+        </ul>
+        <div rel="list-pagination"></div>
+    </div>
+</script>
+
+
+	<script src="http://api.maps.nokia.com/2.2.0/jsl.js?with=places,maps" type="text/javascript"></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+		<!--
+        <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.core.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.position.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.widget.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.mouse.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.draggable.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.resizable.js'></script>
+		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.dialog.js'></script>
+		-->
+        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script
+
     </head>
     <body>
     <style>
-        .nokia-places-general-placelist .nokia-place-name{
+        .nokia-places-general-resultlist .nokia-place-name{
             cursor: pointer;
         }
     </style>
@@ -42,7 +102,7 @@ global $wpdb;
 
         <div id="headerStep1">
             <h1>Search for the place or address</h1>
-            <div id="searchBox"></div>
+            <div id="searchBox" class="nokia-places-wordpress-searchbox"></div>
         </div>
         <div id="headerStep2" class="hidden">
             <h1>Customize your map</h1>
@@ -53,7 +113,14 @@ global $wpdb;
         <div id="placeContainer">
             
             
-            <div id="placeList" class="hidden"></div>
+            <div id="resultList" class="hidden nokia-places-wordpress-resultlist"></div>
+			<div class="hidden nokia-places-wordpress-resultlist" id="no-results">
+				<h1>Something's wrong</h1>
+				<div id="error-msg">
+					<p class="paragraph1">Didn't find anything for <span id="no-results-search-term"></span>.</p>
+					<p>Please check your search term and try again. Adding city or country details could help.</p>
+				</div>
+			</div>
             <div id="map"></div>
             <div id="placeWidgetContainer" class="hidden">
                 <div id="placeWidget"></div>

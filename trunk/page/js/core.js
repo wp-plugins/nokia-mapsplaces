@@ -10,6 +10,8 @@
 */
 jQuery( document ).ready( function(){
 
+    nokia.places.settings.setAppContext({appId: 'I5YGccWtqlFgymFvzbq1', authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg'});  //remove
+
     var widget = window.location.search.match(/widgetMode=([^&]+)/);
 
     var displayOptions = {
@@ -49,11 +51,13 @@ jQuery( document ).ready( function(){
 
     var showPlaceWidget = function(){
         jQuery('#headerStep2, #placeWidgetContainer').removeClass('hidden');
-        jQuery('#map, #placeList, #headerStep1').addClass('hidden');
+        jQuery('#map, #resultList, #headerStep1').addClass('hidden');
         jQuery('#wrapper').removeClass('mapEnabled');
+		showDisplayOptions (widget ? 'nokia.blue.compact' : 'nokia.blue.place');
     }
 
     var hidePlaceWidget = function(){
+	
         if(widget){
           setLayout.call(jQuery('#layoutOptions li#layoutCompact')[0]);
         }
@@ -62,8 +66,20 @@ jQuery( document ).ready( function(){
         }
         
         jQuery('#headerStep2, #placeWidgetContainer').addClass('hidden');
-        jQuery('#map, #placeList, #headerStep1').removeClass('hidden');
+        jQuery('#map, #resultList, #headerStep1').removeClass('hidden');
         jQuery('#wrapper').addClass('mapEnabled');
+		// Re-create empty Place Widget
+		var template = widget ? 'nokia.blue.compact' : 'nokia.blue.place';
+		placeWidget = new nokia.places.widgets.Place({
+            targetNode: 'placeWidget',
+            moduleParams: {
+                'Map': {
+                    iconUrl: 'images/pin.png'
+                }
+            },
+            template: template
+        });
+		showDisplayOptions (template);
     }
 
     var toogleDisplayOption = function(){
@@ -116,7 +132,7 @@ jQuery( document ).ready( function(){
      */
     var insertPlacesApiLink = function () {
         var data = placeWidget.getData();
-
+		
         var tagtext = '[nokia-maps ';
         var win = window.dialogArguments || opener || parent || top;
         
@@ -145,7 +161,13 @@ jQuery( document ).ready( function(){
             sizes:  size,
             display_options: getDisabledDisplayOptions()
         }
-        //check placeid
+		
+        // Now href should be given precedence
+		options.href = currentHref;
+		/*
+		if (data.href) {
+			options.href = data.href;
+		} else
         if (data.placeId){
             options.placeId = data.placeId;
         }else{
@@ -160,6 +182,7 @@ jQuery( document ).ready( function(){
             }while(place_data.length > 0);
             options.place_data_params = i;
         }
+		*/
         
         for(var i in options){
             if(!options[i]){
@@ -168,6 +191,9 @@ jQuery( document ).ready( function(){
             
             tagtext += i+'="'+options[i]+'" ';
         }
+		var jslMap = placeWidget.template.getModules('Map')[0].jslMap;
+		tagtext += ' zoomLevel="' + jslMap.zoomLevel + '" ';
+		tagtext += ' tileType="' + ((jslMap.baseMapType == map.SATELLITE) ? 'satellite' : (jslMap.baseMapType == map.NORMAL) ?  'map' : 'terrain') + '" ';
         tagtext += '] ';
                     
         if(widget && widget[1]){
@@ -194,29 +220,86 @@ jQuery( document ).ready( function(){
     var closeOverlayWindow = function(){
         return parent.tb_remove()
     }
+	
+	var showDisplayOptions = function (template) {
+		var checkbox,
+				options = displayOptions[template];
+			jQuery('.checkboxContainer div').addClass('hidden');
+			for(var i = 0, l = options.length; i < l; i++){
+				jQuery('.checkboxContainer div[rel=' + options[i] + ']').removeClass('hidden');
+				checkbox = jQuery('.checkboxContainer input[value=' + options[i] + ']')[0];
+				if(checkbox){
+					checkbox.checked = true;
+					toogleDisplayOption.call(checkbox)
+				}
+			}
+	}
 
     var setLayout = function(){
+	
+		// Center offsets for templates
+		// To be removed when passing zoomLevel and tileType parameters do not overwrite other module params (like standard offsets)
+		var templateOffsets = {
+		"nokia.blue.place": {
+							place:{
+								x: 0,
+								y: -124
+							},
+							address:{
+								x: 0,
+								y: -100
+							}
+						},
+		"nokia.blue.extended": {
+					place:{
+						x: 250,
+						y: 0
+					},
+					address:{
+						x: 250,
+						y: 0
+					}
+				},
+
+		"nokia.blue.compact": {
+					place:{
+						x: 0,
+						y: 45
+					},
+					address:{
+						x: 0,
+						y: 45
+					}
+				}
+
+		}
+	
         var activeId = jQuery('#layoutOptions li.active')[0].id;
         jQuery('#placeWidgetContainer').removeClass(activeId);
         jQuery('#placeWidgetContainer').addClass(this.id);
+		jQuery('#placeWidget').removeClass();
         
         jQuery('#layoutOptions li').removeClass('active');
 
         jQuery(this).addClass('active');
         activeTemplate = this.getAttribute('rel');
-        placeWidget.setTemplate(activeTemplate, null, null, true);
-
-        var checkbox,
-            options = displayOptions[activeTemplate];
-        jQuery('.checkboxContainer div').addClass('hidden');
-        for(var i = 0, l = options.length; i < l; i++){
-            jQuery('.checkboxContainer div[rel=' + options[i] + ']').removeClass('hidden');
-            checkbox = jQuery('.checkboxContainer input[value=' + options[i] + ']')[0];
-            if(checkbox){
-                checkbox.checked = true;
-                toogleDisplayOption.call(checkbox)
-            }
-        }
+        //placeWidget.setTemplate(activeTemplate, null, null, true);
+		//Re-create placeWidget with a new template
+		if (placeWidget.getData) {
+			currentPlaceData = placeWidget.getData();
+			placeWidget = new nokia.places.widgets.Place({
+				targetNode: 'placeWidget',
+				moduleParams: {
+					'Map': {
+						iconUrl: 'images/pin.png',
+						centerOffset: templateOffsets[activeTemplate]
+					}
+				},
+				template: activeTemplate
+			});
+			placeWidget.setData (currentPlaceData);
+			showDisplayOptions(activeTemplate);
+		}
     }
     
     var getDisabledDisplayOptions = function(){
@@ -231,6 +314,16 @@ jQuery( document ).ready( function(){
         }
         
         return ret.join(' ');
+    }
+	
+	var getDocHeight = function () {
+        var _D = document,
+            body = _D.documentElement;
+        return Math.max(
+                body.scrollHeight, body.scrollHeight,
+                body.offsetHeight, body.offsetHeight,
+                body.clientHeight, body.clientHeight
+                );        
     }
    
     var removeLabelText = function(){
@@ -266,7 +359,9 @@ jQuery( document ).ready( function(){
     }
 
     var map = false,
-        placeWidget;
+        placeWidget,
+		currentHref,
+		currentPlaceData;
     var loadMap = function(){
         var components = [
             new nokia.maps.map.component.Behavior(),
@@ -275,20 +370,20 @@ jQuery( document ).ready( function(){
 
         var rc = new nokia.maps.map.component.RightClick();
         components.push(rc);
-
-        if (nokia.maps.search.Manager) {
+	
+        if (nokia.maps.search.manager) {
             components.push(new nokia.maps.search.component.RightClick());
-        }            
-
+        }
+		
         map = new nokia.maps.map.Display(document.getElementById("map"), {
-            'zoomLevel': 10, //zoom level for the map
-            'center': [52.51, 13.4], //center coordinates,
+            'zoomLevel': 2, //zoom level for the map
+            'center': [50.083333, 14.416667], //center coordinates,
             'components': components
         });
 
+/* Disabling for now, probably redundant code
         var Page = nokia.maps.dom.Page,
-        EventTarget = nokia.maps.dom.EventTarget,
-        searchManager = new nokia.maps.search.Manager();
+        EventTarget = nokia.maps.dom.EventTarget;
 
         var menuAction = function(observedManager, key, value) {
             if(value == "finished") {
@@ -341,8 +436,9 @@ jQuery( document ).ready( function(){
             var coords = map.pixelToGeo(pObj.node.offsetLeft, pObj.node.offsetTop);
             searchManager.reverseGeocode(coords);            
         })
+*/
 
-        placeWidget = new nokia.places.Place({
+        placeWidget = new nokia.places.widgets.Place({
             targetNode: 'placeWidget',
             moduleParams: {
                 'Map': {
@@ -352,14 +448,17 @@ jQuery( document ).ready( function(){
             template: widget ? 'nokia.blue.compact' : 'nokia.blue.place'
         });
 
-        var placeList = new nokia.places.PlaceList({
-            targetNode: 'placeList',
-            template: 'nokia.wordpress.placelist',
+        var resultList = new nokia.places.widgets.ResultList({
+            targetNode: 'resultList',
+            template: 'nokia-maps_resultlist',
+			//template: "nokia.blue.resultlist",
             map: map,
-            perPage: 4,
+            perPage: 6,
             onRenderPage: function(){
-                placeList.displayOnMap();
-                jQuery('#placeList').removeClass('hidden');
+                resultList.displayOnMap();
+				// Resize the map to fit all markers into a visible area (disabled until we get a better idea of how it should work)
+				// map.zoomTo(map.getBoundingBox(), false);
+                jQuery('#resultList').removeClass('hidden');
             },
             events: [
             {
@@ -372,9 +471,9 @@ jQuery( document ).ready( function(){
             ]
         });
 
-        var searchBox = new nokia.places.SearchBox({
+        var searchBox = new nokia.places.widgets.SearchBox({
             targetNode: 'searchBox',
-            template: 'nokia.wordpress.searchbox',                
+            template: 'nokia-maps_searchbox',                
             map: map,
             searchCenter: function () {
                 return {
@@ -383,23 +482,45 @@ jQuery( document ).ready( function(){
                 }
             },
             onResults: function (data) {
+				if (!data.results.items.length) {
+					jQuery('#resultList').addClass('hidden');
+					jQuery("#no-results").removeClass("hidden");
+					jQuery("#no-results-search-term").html(jQuery("input[rel='searchbox-input']").val());
+					return;
+				}
+				jQuery("#no-results").addClass("hidden");
                 document.getElementById('map').className = 'smallMap'
-                placeList.setData(data);
+                resultList.setData(data);
             }
         });
     }
+	
+	// This might be removed when it becomes available in Nokia JS Places API
+	var isPlace = function ( jsonObject ) {
+		var placeIdReg = new RegExp(/([\w\d]{8}-[\w\d]{32})/);
+		if (jsonObject.href){
+			return placeIdReg.test(jsonObject.href);
+		}else if(jsonObject.placeId){
+			return placeIdReg.test(jsonObject.placeId);
+		}
+		return false;
+    }
 
     var setPlaceData = function(data){
-        //check placeid
-        if (data.placeId) {
+        //Show Advanced/Extended layout only for POIs
+		if (!data) return;
+        if (isPlace(data)) {
             jQuery('#layoutAdvanced').removeClass('hidden');
-            placeWidget.setPlaceId(data.placeId);
         }else{
             //or use data only
             jQuery('#layoutAdvanced').addClass('hidden');
-            placeWidget.setData(data);
         }
-        
+
+		//destroy placeId to workaround placeId preference (remove when JS Places API starts using href whenever available)
+		data.placeId = null;
+		currentPlaceData = data;
+		currentHref = data.href;
+        placeWidget.setPlace(data);
         showPlaceWidget();
     }
 
@@ -426,4 +547,3 @@ jQuery( document ).ready( function(){
     
 });
 //end of document ready
-
