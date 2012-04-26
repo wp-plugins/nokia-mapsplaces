@@ -163,7 +163,7 @@ jQuery( document ).ready( function(){
         }
 		
         // Now href should be given precedence
-		options.href = currentHref;
+		options.href = currentHref.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
 		/*
 		if (data.href) {
 			options.href = data.href;

@@ -87,6 +87,8 @@ if($_GET['place_data_params']){
             var template = "<?php echo $_GET['template'] ?>";
 
             var data = {
+                appId: 'I5YGccWtqlFgymFvzbq1',
+                authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg',
 				"template": template,
                 <?php
 				$placeHref = $_GET['href'];
@@ -97,6 +99,13 @@ if($_GET['place_data_params']){
                 echo "displayOptions: '{$_GET['display_options']}'\n";
                 ?>
             }
+            
+            data.href = data.href.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
+            var appCodeData = 'app_id=' + data.appId + '&app_code=' + data.authenticationToken;
+            var separator = data.href.match(/\?/) ? "&" : "?";
+
+            data.href = data.href + separator + appCodeData;
+            
             if('auto' === data.sizes.width){
                 var iframeid = document.getElementById('iframeid').getAttribute('content');
                 var placesIframe = parent.document.getElementById('places_api_view'+iframeid);
@@ -111,12 +120,12 @@ if($_GET['place_data_params']){
                 if(data.displayOptions){
                     document.getElementById('placewidget').className = data.displayOptions;
                 }
-                nokia.places.settings.setAppContext({appId: 'I5YGccWtqlFgymFvzbq1', authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg'});  //remove
+                nokia.places.settings.setAppContext({appId: data.appId, authenticationToken: data.authenticationToken});  //remove
                 var place = new nokia.places.widgets.Place({
                     targetNode: 'placewidget',
                     template: data.template,
                     placeId: data.placeId,
-					href: data.href,
+                    href: data.href,
                     moduleParams: {
                         'Map': {
                             iconUrl: 'images/pin.png',
