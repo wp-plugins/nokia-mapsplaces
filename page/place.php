@@ -100,11 +100,16 @@ if($_GET['place_data_params']){
                 ?>
             }
             
-            data.href = data.href.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
+			
+            
             var appCodeData = 'app_id=' + data.appId + '&app_code=' + data.authenticationToken;
-            var separator = data.href.match(/\?/) ? "&" : "?";
-
-            data.href = data.href + separator + appCodeData;
+            
+			// href may not be defined for legacy places
+			if (data.href) {
+				data.href = data.href.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
+				var separator = data.href.match(/\?/) ? "&" : "?";
+				data.href = data.href + separator + appCodeData;
+			}
             
             if('auto' === data.sizes.width){
                 var iframeid = document.getElementById('iframeid').getAttribute('content');
