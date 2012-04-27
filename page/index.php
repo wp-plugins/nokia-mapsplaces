@@ -78,17 +78,7 @@ global $wpdb;
 	<script src="http://api.maps.nokia.com/2.2.0/jsl.js?with=places,maps" type="text/javascript"></script>
 		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-		<!--
-        <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.core.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.position.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.widget.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.mouse.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.draggable.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.resizable.js'></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/ui.dialog.js'></script>
-		-->
-        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script
+        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
 
     </head>
     <body>

@@ -30,14 +30,14 @@ h1 {
     display: none;
 }
 #wrapper{
-    width: 625px;
+    width: 905px;
     position: absolute;
     margin: 10px;
 	min-height: 90%;
 }
 
 #map, #placeContainer{
-    width: 650px;
+    width: 930px;
 	height: 565px;
 	min-height: 90%;
 }
@@ -50,7 +50,7 @@ h1 {
 }
 
 #placeContainer .smallMap{
-    width: 355px;
+    width: 635px;
 }
 
 #placeContainer{
@@ -96,10 +96,7 @@ h1 {
 
 #placeWidget{
     position: relative;
-/*    position: absolute;
-    left: 0;
-    top: 0;*/
-    width: 625px;
+    width: 905px;
     z-index: 100;
     margin: 0;
     background: #FFF;
@@ -287,7 +284,7 @@ h1 {
     border-left: 1px solid #DDDDDD;
     margin: 5px 0;
     padding-left: 20px;
-    width: 408px;
+    width: 688px;
 }
 .tab .fixedSizes a.active{
     color: #FFF;
