@@ -375,11 +375,18 @@ jQuery( document ).ready( function(){
             components.push(new nokia.maps.search.component.RightClick());
         }
 		
+		jQuery('#map').addClass('hidden');
         map = new nokia.maps.map.Display(document.getElementById("map"), {
             'zoomLevel': 2, //zoom level for the map
             'center': [50.083333, 14.416667], //center coordinates,
             'components': components
         });
+		
+		// Try to position a map
+		map.set("minZoomLevel", 3);
+		var l = new Locator({map:map});
+		l.locate();
+		jQuery('#map').removeClass('hidden');
 
 /* Disabling for now, probably redundant code
         var Page = nokia.maps.dom.Page,

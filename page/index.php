@@ -79,6 +79,7 @@ global $wpdb;
 		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
+		<script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/locator.js"></script>
 
     </head>
     <body>
