@@ -44,19 +44,19 @@ jQuery( document ).ready( function(){
     }
     
     var sizes = [
-        {width: 'auto', height: 370, label: 'Use blog size'}
-    ],
+            {width: 'auto', height: 370, label: 'Use blog size'}
+        ],
         activeTemplate,
         activeSize;
 
-    var showPlaceWidget = function(){
+    function showPlaceWidget(){
         jQuery('#headerStep2, #placeWidgetContainer').removeClass('hidden');
         jQuery('#map, #resultList, #headerStep1').addClass('hidden');
         jQuery('#wrapper').removeClass('mapEnabled');
 		showDisplayOptions (widget ? 'nokia.blue.compact' : 'nokia.blue.place');
     }
 
-    var hidePlaceWidget = function(){
+    function hidePlaceWidget(){
 	
         if(widget){
           setLayout.call(jQuery('#layoutOptions li#layoutCompact')[0]);
@@ -82,7 +82,7 @@ jQuery( document ).ready( function(){
 		showDisplayOptions (template);
     }
 
-    var toogleDisplayOption = function(){
+    function toogleDisplayOption(){
         var className = 'no-' + this.getAttribute('value');
         var container = jQuery('#placeWidgetContainer');
         if(true === this.checked){
@@ -99,7 +99,7 @@ jQuery( document ).ready( function(){
      * Extract JSON object to {"key": "value"} type
      *
      */
-    var renderJSON = function(obj){
+    function renderJSON(obj){
         var keys = [];
         var retValue = "{";
         for (var key in obj) {
@@ -130,7 +130,7 @@ jQuery( document ).ready( function(){
      * Creates a shortcode for particular place and puts it into tinymce content
      *
      */
-    var insertPlacesApiLink = function () {
+    function insertPlacesApiLink() {
         var data = placeWidget.getData();
 		
         var tagtext = '[nokia-maps ';
@@ -217,11 +217,11 @@ jQuery( document ).ready( function(){
         return;
     }
 
-    var closeOverlayWindow = function(){
+    function closeOverlayWindow(){
         return parent.tb_remove()
     }
 	
-	var showDisplayOptions = function (template) {
+    function showDisplayOptions (template) {
 		var checkbox,
 				options = displayOptions[template];
 			jQuery('.checkboxContainer div').addClass('hidden');
@@ -235,7 +235,7 @@ jQuery( document ).ready( function(){
 			}
 	}
 
-    var setLayout = function(){
+	function setLayout(){
 	
 		// Center offsets for templates
 		// To be removed when passing zoomLevel and tileType parameters do not overwrite other module params (like standard offsets)
@@ -302,7 +302,7 @@ jQuery( document ).ready( function(){
 		}
     }
     
-    var getDisabledDisplayOptions = function(){
+    function getDisabledDisplayOptions(){
         var ret = [],
             options = displayOptions[activeTemplate];
 
@@ -316,7 +316,7 @@ jQuery( document ).ready( function(){
         return ret.join(' ');
     }
 	
-	var getDocHeight = function () {
+    function getDocHeight(){
         var _D = document,
             body = _D.documentElement;
         return Math.max(
@@ -326,16 +326,14 @@ jQuery( document ).ready( function(){
                 );        
     }
    
-    var removeLabelText = function(){
+	function removeLabelText(){
         this.value = "";
         jQuery(this).removeClass('labelText');
-//        jQuery(this).unbind('focus');
-        
         jQuery('#fixedSizes .active').removeClass('active');
         activeSize = false;
     }
     
-    var activateSize = function(){
+    function activateSize(){
         jQuery('#fixedSizes .active').removeClass('active');
         jQuery(this).addClass('active');
         activeSize = this._sizeIndex;
@@ -345,7 +343,7 @@ jQuery( document ).ready( function(){
         inputs[1].value = '';
     }
     
-    var fillSizes = function(){
+    function fillSizes(){
         var el;
         for(var i = 0, l = sizes.length; i < l; i++){
             el = document.createElement('a');
@@ -358,14 +356,56 @@ jQuery( document ).ready( function(){
         }
     }
 
+    
+    function createDispayedReg (places){
+        var result = {},
+            place;
+        
+        if(places instanceof Array){
+            for(var i=0, l=places.length; i<l; i++){
+                place = places[i];
+                if(!result[place.href]){
+                    result[place.href] = true;
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    
     var map = false,
         placeWidget,
 		currentHref,
-		currentPlaceData;
-    var loadMap = function(){
+		currentPlaceData,
+		infoBubbles;
+    
+    
+    function onMarkerClickFactory(place){
+        return function(ev){
+            infoBubbles.addBubble('', new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true));
+            var contentNode = infoBubbles.findElement("nm_bubble_content");
+            if(!contentNode){
+                contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
+            }
+            
+            var bubbleWidget = new nokia.places.widgets.Place({
+                template: 'nokia-maps_bubble'
+            });
+            
+            bubbleWidget.setData(place, contentNode);
+        }
+    }
+    
+    
+    function loadMap (){
+        //initialize infobubbles 
+        infoBubbles = new nokia.maps.map.component.InfoBubbles();
+        
         var components = [
             new nokia.maps.map.component.Behavior(),
-            new nokia.maps.map.component.ZoomBar()
+            new nokia.maps.map.component.ZoomBar(),
+            infoBubbles
         ];
 
         var rc = new nokia.maps.map.component.RightClick();
@@ -388,62 +428,7 @@ jQuery( document ).ready( function(){
 		l.locate();
 		jQuery('#map').removeClass('hidden');
 
-/* Disabling for now, probably redundant code
-        var Page = nokia.maps.dom.Page,
-        EventTarget = nokia.maps.dom.EventTarget;
 
-        var menuAction = function(observedManager, key, value) {
-            if(value == "finished") {
-                if (observedManager.locations.length > 0) {
-                    var el = rc.findElement('rc-menu-item-header');
-
-                    if(!el){
-                        setTimeout(function(){
-                            menuAction(observedManager, key, value)
-                        }, 100);
-                        return false;
-                    }
-
-                    Page(el);
-                    EventTarget(el);
-
-                    var obj = observedManager.locations[0];
-                    el.addListener("click", function(evt) {
-                        var place = {
-                            additionalData: {},
-                            location: {
-                                address: obj.address,
-                                displayPosition: obj.displayPosition
-                            },
-                            categories: [
-                            {
-                                iconURL: '../placesapi//css/img/wordpress/categoryicons/png_43x36_blue/Address.png'
-                            }
-                            ]
-                        };
-                        setPlaceData(place);
-
-                        el.removeListener("click", arguments.callee, false);
-                    }, false);
-
-
-                }
-            } else if(value == "failed") {
-                alert("The request failed.");
-            }
-        }
-
-        searchManager.addObserver("state", menuAction);
-
-        rc.addObserver('hidden', function(pObj, pName, pValue){
-            if(false !== pValue){
-                return false;
-            }
-
-            var coords = map.pixelToGeo(pObj.node.offsetLeft, pObj.node.offsetTop);
-            searchManager.reverseGeocode(coords);            
-        })
-*/
 
         placeWidget = new nokia.places.widgets.Place({
             targetNode: 'placeWidget',
@@ -461,8 +446,49 @@ jQuery( document ).ready( function(){
 			//template: "nokia.blue.resultlist",
             map: map,
             perPage: 6,
-            onRenderPage: function(){
-                resultList.displayOnMap();
+            onRenderPage: function(renderData, pageNumber){
+                
+                map.objects.clear();
+                
+                var displayedPlaces = createDispayedReg(renderData),
+                    allPlaces = (resultList.data)? resultList.data.results.items : [],
+                    i,
+                    l,
+                    place,
+                    placeNum;
+               
+                
+                //display all other places as small pins
+                for(i=0, l=allPlaces.length; i<l; i++){
+                    place = allPlaces[i];
+                    if(!displayedPlaces[place.href]){
+                        var mapCoords = new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true),
+                            mapMarker = new nokia.maps.map.Marker(mapCoords, {
+                                icon: 'images/pin_small_round.png',
+                                anchor: {
+                                    x: 5.5,
+                                    y: 7.5
+                                }
+                            });
+                        mapMarker.addListener('click',onMarkerClickFactory(place));
+                        map.objects.add(mapMarker);
+                    }
+                }
+                
+                renderData.reverse();
+                placeNum = renderData.length;
+                //display current place on the list
+                for(i=0, l=renderData.length; i<l; i++){
+                    place = renderData[i];
+                    var mapCoords = new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true),
+                    mapMarker = new nokia.maps.map.StandardMarker(mapCoords, {
+                        text: placeNum
+                    });
+                    mapMarker.addListener('click',onMarkerClickFactory(place));
+                    map.objects.add(mapMarker);
+                    placeNum--;
+                }
+                
 				// Resize the map to fit all markers into a visible area (disabled until we get a better idea of how it should work)
 				// map.zoomTo(map.getBoundingBox(), false);
                 jQuery('#resultList').removeClass('hidden');
@@ -480,7 +506,8 @@ jQuery( document ).ready( function(){
 
         var searchBox = new nokia.places.widgets.SearchBox({
             targetNode: 'searchBox',
-            template: 'nokia-maps_searchbox',                
+            template: 'nokia-maps_searchbox',
+            maxResults: 96,
             map: map,
             searchCenter: function () {
                 return {
@@ -503,7 +530,7 @@ jQuery( document ).ready( function(){
     }
 	
 	// This might be removed when it becomes available in Nokia JS Places API
-	var isPlace = function ( jsonObject ) {
+    function isPlace( jsonObject ) {
 		var placeIdReg = new RegExp(/([\w\d]{8}-[\w\d]{32})/);
 		if (jsonObject.href){
 			return placeIdReg.test(jsonObject.href);
@@ -513,7 +540,7 @@ jQuery( document ).ready( function(){
 		return false;
     }
 
-    var setPlaceData = function(data){
+    function setPlaceData(data){
         //Show Advanced/Extended layout only for POIs
 		if (!data) return;
         if (isPlace(data)) {

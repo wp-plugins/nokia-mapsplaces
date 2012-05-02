@@ -325,3 +325,63 @@ html, body {
     font-size: 11px;
     color: #999;
 }
+
+.nokia-place-bubble {
+    width: 250px;
+}
+
+.nokia-place-bubble *{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0px;
+    padding:0px;
+    border:none;
+}
+
+.nokia-place-bubble h3.nokia-place-name {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 15px;
+    margin: 0px;
+    white-space: normal;
+}
+
+.nokia-place-bubble .nokia-place-category {
+    color: #999;
+    font-size: 11px;
+    display: block;
+    line-height: 12px;
+}
+
+.nokia-place-bubble .nokia-bubble-summary{
+    margin-top: 5px;
+    line-height: 13px;
+    font-size: 11px;
+}
+
+.nokia-place-bubble .nokia-place-categicon{
+    float: right;
+}
+
+.nokia-place-bubble .nokia-place-select{
+    text-align: center;
+    clear: both;
+    padding-top: 3px;
+}
+
+.nokia-place-bubble .nokia-place-select a{
+    color: #0099BB;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 11px;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.nokia-place-bubble .nokia-place-select a:hover{
+    background-color: #3C4650;
+    border-radius: 5px 5px 5px 5px;
+    margin: 0px -5px;
+    padding: 2px 5px;
+}
+

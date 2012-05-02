@@ -74,6 +74,19 @@ global $wpdb;
     </div>
 </script>
 
+<!-- bubble displays raw search result -->
+<script id="nokia-maps_bubble" type="text/template">
+	<div class="nokia-place-bubble">
+		<img url="{category.icon}.web.category_symbols_light.png" class="nokia-place-categicon">
+		<h3 fill="{title}" class="nokia-place-name"></h3>
+    	<span fill="{category.name}" class="nokia-place-category"></span>
+    	<div fill="{vicinity}" class="nokia-bubble-summary"></div>
+		<div class="nokia-place-select">
+			<a rel="select-lnk">Select this place</a>
+		</div>
+	</div>  
+</script>
+
 
 	<script src="http://api.maps.nokia.com/2.2.0/jsl.js?with=places,maps" type="text/javascript"></script>
 		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
