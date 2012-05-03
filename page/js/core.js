@@ -12,6 +12,15 @@ jQuery( document ).ready( function(){
 
     nokia.places.settings.setAppContext({appId: 'I5YGccWtqlFgymFvzbq1', authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg'});  //remove
 
+    /**
+     * Object used in all functions
+     */
+    var map = false,
+        placeWidget,
+        currentHref,
+        currentPlaceData,
+        infoBubbles;
+    
     var widget = window.location.search.match(/widgetMode=([^&]+)/);
 
     var displayOptions = {
@@ -374,11 +383,7 @@ jQuery( document ).ready( function(){
     }
     
     
-    var map = false,
-        placeWidget,
-		currentHref,
-		currentPlaceData,
-		infoBubbles;
+    
     
     function setPlaceData(data){
         //Show Advanced/Extended layout only for POIs
@@ -422,6 +427,21 @@ jQuery( document ).ready( function(){
         }
     }
     
+    function zoomMapToPoints(points){
+        var coords = (points instanceof Array)? points : points.results.items,
+            mapCoords = [];
+        
+        for(var i=0,l = coords.length; i<l; i++){
+            var coord = coords[i];
+            mapCoords.push(new nokia.maps.geo.Coordinate(coord.position.latitude, coord.position.longitude, null, true));
+        }
+        
+        if(mapCoords.length){
+            var allBounds = nokia.maps.geo.BoundingBox.coverAll(mapCoords);
+            map.zoomTo(allBounds);
+            
+        }
+    }
     
     function loadMap (){
         //initialize infobubbles 
@@ -539,17 +559,36 @@ jQuery( document ).ready( function(){
                     longitude: 13.377678
                 }
             },
+            onSearchStart: function(){
+                jQuery("#resultList").removeClass('hidden').addClass('loading');
+                jQuery("#no-results").addClass("hidden");
+                jQuery('#map').addClass('smallMap');
+
+            },
             onResults: function (data) {
+                
+                infoBubbles.removeBubble();
+                jQuery("#resultList").removeClass('loading');
+                
 				if (!data.results.items.length) {
 					jQuery('#resultList').addClass('hidden');
 					jQuery("#no-results").removeClass("hidden");
 					jQuery("#no-results-search-term").html(jQuery("input[rel='searchbox-input']").val());
 					return;
+				}else{
+				    
+				    var firstResult = data.results.items[0],
+				        zoomPoints = data;
+				    //if first result (most relevant) is a city or a country (administrative region) then show it's bounds
+                    if(firstResult.boundingBox && (firstResult.category.categoryId === 'administrative-region' || firstResult.category.categoryId === 'city-town-village')){
+                        zoomPoints = [{position: firstResult.boundingBox.topLeft}, {position: firstResult.boundingBox.bottomRight}];   
+                    }
+                    zoomMapToPoints(zoomPoints);
+				    resultList.setData(data);
 				}
-				jQuery("#no-results").addClass("hidden");
-                document.getElementById('map').className = 'smallMap'
-                infoBubbles.removeBubble();
-                resultList.setData(data);
+				
+				
+                
             }
         });
     }
