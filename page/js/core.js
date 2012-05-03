@@ -404,27 +404,25 @@ jQuery( document ).ready( function(){
     }
     
     
-    function onMarkerClickFactory(place){
-        return function(ev){
-            infoBubbles.addBubble('', new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true));
-            var contentNode = infoBubbles.findElement("nm_bubble_content");
-            if(!contentNode){
-                contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
-            }
-            
-            var bubbleWidget = new nokia.places.widgets.Place({
-                template: 'nokia-maps_bubble',
-                events: [{
-                    rel: 'select-lnk',
-                    name: 'click',
-                    handler: function(place){
-                        setPlaceData(place)
-                    }
-                }]
-            });
-            
-            bubbleWidget.setData(place, contentNode);
+    function openBubble(place){
+        infoBubbles.addBubble('', new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true));
+        var contentNode = infoBubbles.findElement("nm_bubble_content");
+        if(!contentNode){
+            contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
         }
+        
+        var bubbleWidget = new nokia.places.widgets.Place({
+            template: 'nokia-maps_bubble',
+            events: [{
+                rel: 'select-lnk',
+                name: 'click',
+                handler: function(place){
+                    setPlaceData(place)
+                }
+            }]
+        });
+        
+        bubbleWidget.setData(place, contentNode);
     }
     
     function zoomMapToPoints(points){
@@ -443,6 +441,55 @@ jQuery( document ).ready( function(){
         }
     }
     
+    
+    function getMapsBBox(boundingBox){
+        if(boundingBox){
+            var topLeft = boundingBox.topLeft,
+                bottomRight = boundingBox.bottomRight;
+            
+            topLeft = new nokia.maps.geo.Coordinate(topLeft.latitude, topLeft.longitude, null, true);
+            bottomRight = new nokia.maps.geo.Coordinate(bottomRight.latitude, bottomRight.longitude, null, true);
+            return new nokia.maps.geo.BoundingBox(topLeft,bottomRight);
+        }
+    }
+    
+    function zoomMapToBoundingBox(boundingBox){
+        map.zoomTo(getMapsBBox(boundingBox), false);
+    }
+    
+    function zoomMapToPoint(coords){
+        var mapCoords = new nokia.maps.geo.Coordinate(coords.latitude, coords.longitude, null, true);
+        map.setCenter(mapCoords);
+    }
+    
+    function isInView(place){
+        var viewBounds = map.getViewBounds(),
+            mapCoords = new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true),
+            mapBBox = getMapsBBox(place.boundingBox);
+        
+        if(viewBounds){
+            if(mapBBox){
+                return viewBounds.contains(mapBBox);
+            }else{
+                return viewBounds.contains(mapCoords);
+            }
+            
+        }
+    }
+    
+    function addMarkerEvents(mapMarker, place){
+        mapMarker.addListener('mouseenter', function(){
+            document.body.style.cursor = 'pointer';    
+        });
+        mapMarker.addListener('mouseleave', function(){
+            document.body.style.cursor = 'default';
+        });
+        
+        mapMarker.addListener('click',function(){
+            openBubble(place);
+        });
+    }
+    
     function loadMap (){
         //initialize infobubbles 
         infoBubbles = new nokia.maps.map.component.InfoBubbles();
@@ -450,6 +497,7 @@ jQuery( document ).ready( function(){
         var components = [
             new nokia.maps.map.component.Behavior(),
             new nokia.maps.map.component.ZoomBar(),
+            new nokia.maps.map.component.TypeSelector(),
             infoBubbles
         ];
 
@@ -514,7 +562,8 @@ jQuery( document ).ready( function(){
                                     y: 7.5
                                 }
                             });
-                        mapMarker.addListener('click',onMarkerClickFactory(place));
+                        
+                        addMarkerEvents(mapMarker,place);
                         map.objects.add(mapMarker);
                     }
                 }
@@ -528,7 +577,8 @@ jQuery( document ).ready( function(){
                     mapMarker = new nokia.maps.map.StandardMarker(mapCoords, {
                         text: placeNum
                     });
-                    mapMarker.addListener('click',onMarkerClickFactory(place));
+                    
+                    addMarkerEvents(mapMarker,place);
                     map.objects.add(mapMarker);
                     placeNum--;
                 }
@@ -539,9 +589,26 @@ jQuery( document ).ready( function(){
             },
             events: [
             {
-                rel:'nokia-place-name',
+                rel:'nokia-place',
                 name:'click',
                 handler: function(data){
+                    
+                    if(!isInView(data)){
+                        if(data.boundingBox){
+                            zoomMapToBoundingBox(data.boundingBox);
+                        }else{
+                            zoomMapToPoint(data.position);
+                        }
+                    }
+                    
+                    openBubble(data);
+                }
+            },
+            {
+                rel:'nokia-place-select',
+                name:'click',
+                handler: function(data, ev){
+                    nokia.places.utils.dom.stopPropagation(ev);
                     setPlaceData(data);
                 }
             }
@@ -577,13 +644,14 @@ jQuery( document ).ready( function(){
 					return;
 				}else{
 				    
-				    var firstResult = data.results.items[0],
-				        zoomPoints = data;
+				    var firstResult = data.results.items[0];
 				    //if first result (most relevant) is a city or a country (administrative region) then show it's bounds
                     if(firstResult.boundingBox && (firstResult.category.categoryId === 'administrative-region' || firstResult.category.categoryId === 'city-town-village')){
-                        zoomPoints = [{position: firstResult.boundingBox.topLeft}, {position: firstResult.boundingBox.bottomRight}];   
+                        zoomMapToBoundingBox(firstResult.boundingBox)
+                    }else{
+                        zoomMapToPoints(data);
                     }
-                    zoomMapToPoints(zoomPoints);
+                   
 				    resultList.setData(data);
 				}
 				
