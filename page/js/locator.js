@@ -2,7 +2,8 @@ function Locator(params){
 	
 	var self = this;
 	this.located = false;
-	var onComplete;
+	var onComplete,
+	   logMessages = true;
 	
 	//methods to use in lookup, in order of execution
 	this.methods = [ipLookUp,detectFromBrowser,fallToPrague];
@@ -12,11 +13,20 @@ function Locator(params){
 			this.map = params.map
 		}
 	}
-
+    
+	function logMessage(message){
+	    if(logMessages){
+	        if(window.console && window.console.log){
+	            window.console.log(message);
+	        }
+	    }
+	}
+	
+	
 	///////// Detection Methods /////////
 	function ipLookUp()
 	{
-		console.log("Trying IP Lookup");		
+		logMessage("Trying IP Lookup");		
 		jQuery.ajax({
 			url:"http://maps.nokia.com/services/iplookup/get?callback=?",
 			dataType:"json",
@@ -43,7 +53,7 @@ function Locator(params){
 	}
 
 	function detectFromBrowser(){
-		console.log("Trying Browser Detect");
+		logMessage("Trying Browser Detect");
 		var userLang = (navigator.language) ? navigator.language : navigator.userLanguage; 
 		userLang = userLang.split('-');
 		var searchTerm;
@@ -143,7 +153,7 @@ function Locator(params){
 	}
 	
 	function geoLocate(){
-		console.log("Trying geolocation");
+		logMessage("Trying geolocation");
 		
 		var geoLocation = (navigator) ? navigator.geolocation : null;
 		if(!geoLocation)
@@ -166,7 +176,7 @@ function Locator(params){
 	}
 
 	function fallToPrague(){
-		console.log("Last resort :(");
+		logMessage("Last resort :(");
 		
 		var prague = {
 					position:{
@@ -202,7 +212,7 @@ function Locator(params){
 			this.located = true;
 			
 		if(data.boundingBox){
-			console.log("FOUND A BBOX");
+			logMessage("FOUND A BBOX");
 			if(self.map){				
 				var bbox = new nokia.maps.geo.BoundingBox(
 					new nokia.maps.geo.Coordinate(data.boundingBox.topLeft.latitude, data.boundingBox.topLeft.longitude),
@@ -212,7 +222,7 @@ function Locator(params){
 			}
 		}
 		else if(data.position){	
-			console.log("FOUND "+data.position.latitude+":"+data.position.longitude);	
+			logMessage("FOUND "+data.position.latitude+":"+data.position.longitude);	
 			if(self.map){
 				self.map.setCenter(data.position);
 				
@@ -238,7 +248,7 @@ function Locator(params){
 			self.methods.shift()(self);
 		}else
 		{
-			console.log("All available methods failed");
+			logMessage("All available methods failed");
 		}
 	}
 };

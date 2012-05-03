@@ -80,8 +80,7 @@ h1 {
     width: 280px;
     z-index: 100;
 	padding-right: 5px;
-    /*height: 350px;*/
-	min-height: 90%;
+	height: 565px;
 }
 
 #no-results {

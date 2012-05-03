@@ -380,6 +380,24 @@ jQuery( document ).ready( function(){
 		currentPlaceData,
 		infoBubbles;
     
+    function setPlaceData(data){
+        //Show Advanced/Extended layout only for POIs
+        if (!data) return;
+        if (isPlace(data)) {
+            jQuery('#layoutAdvanced').removeClass('hidden');
+        }else{
+            //or use data only
+            jQuery('#layoutAdvanced').addClass('hidden');
+        }
+
+        //destroy placeId to workaround placeId preference (remove when JS Places API starts using href whenever available)
+        data.placeId = null;
+        currentPlaceData = data;
+        currentHref = data.href;
+        placeWidget.setPlace(data);
+        showPlaceWidget();
+    }
+    
     
     function onMarkerClickFactory(place){
         return function(ev){
@@ -390,7 +408,14 @@ jQuery( document ).ready( function(){
             }
             
             var bubbleWidget = new nokia.places.widgets.Place({
-                template: 'nokia-maps_bubble'
+                template: 'nokia-maps_bubble',
+                events: [{
+                    rel: 'select-lnk',
+                    name: 'click',
+                    handler: function(place){
+                        setPlaceData(place)
+                    }
+                }]
             });
             
             bubbleWidget.setData(place, contentNode);
@@ -447,7 +472,6 @@ jQuery( document ).ready( function(){
             map: map,
             perPage: 6,
             onRenderPage: function(renderData, pageNumber){
-                
                 map.objects.clear();
                 
                 var displayedPlaces = createDispayedReg(renderData),
@@ -524,6 +548,7 @@ jQuery( document ).ready( function(){
 				}
 				jQuery("#no-results").addClass("hidden");
                 document.getElementById('map').className = 'smallMap'
+                infoBubbles.removeBubble();
                 resultList.setData(data);
             }
         });
@@ -540,23 +565,7 @@ jQuery( document ).ready( function(){
 		return false;
     }
 
-    function setPlaceData(data){
-        //Show Advanced/Extended layout only for POIs
-		if (!data) return;
-        if (isPlace(data)) {
-            jQuery('#layoutAdvanced').removeClass('hidden');
-        }else{
-            //or use data only
-            jQuery('#layoutAdvanced').addClass('hidden');
-        }
-
-		//destroy placeId to workaround placeId preference (remove when JS Places API starts using href whenever available)
-		data.placeId = null;
-		currentPlaceData = data;
-		currentHref = data.href;
-        placeWidget.setPlace(data);
-        showPlaceWidget();
-    }
+    
 
     
     jQuery('.checkboxContainer input').bind('change', toogleDisplayOption);

@@ -51,7 +51,7 @@ global $wpdb;
                     <span class="nokia-wordpress-preview-label">Select this place</span>
             </li>
         </ul>
-        <div rel="list-pagination"></div>
+        <div rel="list-pagination" class="nokia-pagination"></div>
     </div>
 </script>
 
@@ -70,7 +70,7 @@ global $wpdb;
                     <span class="nokia-wordpress-preview-label">Select this place</span>
             </li>
         </ul>
-        <div rel="list-pagination"></div>
+        <div rel="list-pagination" class="nokia-pagination"></div>
     </div>
 </script>
 
