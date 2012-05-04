@@ -501,9 +501,6 @@ jQuery( document ).ready( function(){
 			// An entry may have a text label and a callback to be invoked upon activation of the entry
 			var coords = context.pixelToGeo(contextMenuEvent.displayX, contextMenuEvent.displayY);
             group.addEntry("Select this address", function(){
-                var self = this;
-                //to be fixed we should have rev geo data already
-                return;
                 nokia.places.search.manager.reverseGeoCode({
                     latitude: coords.latitude,
                     longitude: coords.longitude,
