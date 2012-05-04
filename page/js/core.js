@@ -19,7 +19,8 @@ jQuery( document ).ready( function(){
         placeWidget,
         currentHref,
         currentPlaceData,
-        infoBubbles;
+        infoBubbles,
+        contextMenu;
     
     var widget = window.location.search.match(/widgetMode=([^&]+)/);
 
@@ -75,7 +76,10 @@ jQuery( document ).ready( function(){
         }
         
         jQuery('#headerStep2, #placeWidgetContainer').addClass('hidden');
-        jQuery('#map, #resultList, #headerStep1').removeClass('hidden');
+        if(jQuery('#map').hasClass('smallMap')){
+            jQuery('#resultList').removeClass('hidden');
+        }
+        jQuery('#map, #headerStep1').removeClass('hidden');
         jQuery('#wrapper').addClass('mapEnabled');
 		// Re-create empty Place Widget
 		var template = widget ? 'nokia.blue.compact' : 'nokia.blue.place';
@@ -490,24 +494,57 @@ jQuery( document ).ready( function(){
         });
     }
     
+    customHandler = function(contextMenuEvent, group) {
+		var context = contextMenuEvent.target;
+		// If the current context target is a display, we add some entries to pan the map
+		if (context instanceof nokia.maps.map.Display) {
+			// An entry may have a text label and a callback to be invoked upon activation of the entry
+			var coords = context.pixelToGeo(contextMenuEvent.displayX, contextMenuEvent.displayY);
+            group.addEntry("Select this address", function(){
+                var self = this;
+                //to be fixed we should have rev geo data already
+                return;
+                nokia.places.search.manager.reverseGeoCode({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                    onComplete: function(data, status){
+                        if (status === 'OK') {
+                            nokia.places.search.manager.findPlaces({
+                                searchCenter: coords,
+                                searchTerm: data.name,
+                                onComplete: function(res, st){
+                                    if (st === 'OK') {
+                                        var searched = jsMotif.selector.getData.call(res, 'results.items[0]');
+                                        if (searched) {
+                                            setPlaceData(searched);
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+                
+            });
+            
+		}
+	};
+    
     function loadMap (){
         //initialize infobubbles 
         infoBubbles = new nokia.maps.map.component.InfoBubbles();
+        contextMenu = new nokia.maps.map.component.ContextMenu();
         
         var components = [
             new nokia.maps.map.component.Behavior(),
             new nokia.maps.map.component.ZoomBar(),
             new nokia.maps.map.component.TypeSelector(),
-            infoBubbles
+            infoBubbles,
+            contextMenu
         ];
-
-        var rc = new nokia.maps.map.component.RightClick();
-        components.push(rc);
-	
-        if (nokia.maps.search.manager) {
-            components.push(new nokia.maps.search.component.RightClick());
-        }
-		
+        
+		contextMenu.addHandler(customHandler);
+        
 		jQuery('#map').addClass('hidden');
         map = new nokia.maps.map.Display(document.getElementById("map"), {
             'zoomLevel': 2, //zoom level for the map
@@ -602,6 +639,20 @@ jQuery( document ).ready( function(){
                     }
                     
                     openBubble(data);
+                }
+            },
+            {
+                rel:'nokia-place',
+                name:'mouseenter',
+                handler: function(data){
+                    jQuery(this).addClass('hover');
+                }
+            },
+            {
+                rel:'nokia-place',
+                name:'mouseleave',
+                handler: function(data){
+                    jQuery(this).removeClass('hover');
                 }
             },
             {

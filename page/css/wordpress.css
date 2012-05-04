@@ -90,12 +90,10 @@ html, body {
 
 .nokia-places-wordpress-resultlist {
     width: 310px;
-    background-color: #fff;
-    
 }
 
 .nokia-places-wordpress-resultlist.loading{
-    background: url('../images/loading-big.gif') no-repeat 94px 190px;
+    background: url('../images/loading-big.gif') no-repeat 94px 190px #fff;
 }
 
 .nokia-places-wordpress-resultlist p {
@@ -121,10 +119,15 @@ html, body {
 .nokia-places-wordpress-resultlist .nokia-place-list-elem {
     position: relative;
     margin: 0;
-    padding: 12px 0;
+    padding: 12px 0px 12px 5px;
     border-bottom: solid 1px #EEEEEE;
     cursor: pointer;
 	height: 65px;
+}
+
+.nokia-places-wordpress-resultlist .nokia-place-list-elem.hover{
+    padding: 12px 0px 12px 2px;
+    border-left:solid 3px #0066AA;
 }
 
 .nokia-blue-categoryicon{
@@ -210,7 +213,8 @@ html, body {
 	width: 26px;
 }
 
-.nokia-places-wordpress-resultlist .nokia-wordpress-preview-label{
+.nokia-places-wordpress-resultlist .nokia-wordpress-preview-label,
+.nokia-places-wordpress-resultlist .nokia-wordpress-preview-label:visited{
     font-size: 12px;
     color: #0066AA;
     right: 3px;
@@ -218,6 +222,15 @@ html, body {
     position: absolute;
     cursor: pointer;
 }
+
+.nokia-places-wordpress-resultlist .nokia-wordpress-preview-label:hover{
+    background-color: #0066AA;
+    color: #fff;
+    border-radius: 5px 5px 5px 5px;
+    margin: 0px -5px;
+    padding: 2px 5px;
+}
+
 .nokia-places-wordpress-searchbox *{
     font-family: Arial;
     font-weight: normal;

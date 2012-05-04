@@ -67,7 +67,7 @@ global $wpdb;
 				</div>
 				<p fill="{title}" class="nokia-place-name"></p>
                 <div class="nokia-place-address" fill="{vicinity}"></div>
-                <span class="nokia-wordpress-preview-label" rel="nokia-place-select">Select this place</span>
+                <a class="nokia-wordpress-preview-label" rel="nokia-place-select">Select this place</a>
             </li>
         </ul>
         <div rel="list-pagination" class="nokia-pagination"></div>
