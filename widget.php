@@ -48,9 +48,37 @@ class NokiaMapsPlacesWidget extends WP_Widget {
             ?>
             <p>
                 <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
-                <a id='add_place' style="text-decoration: none;" <?php echo $thinbox; ?> href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' title='Add a map - Powered by Nokia'><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
+                <a id='add_place' onclick="switch_tb_position()" style="text-decoration: none;" <?php echo $thinbox; ?> href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' title='Add a map - Powered by Nokia' class="thickbox"><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
             </p>
-            
+            <script type='text/javascript'>
+                function switch_tb_position(){
+                    var old_tb_position = tb_position;
+                    var old_tb_remove = tb_remove;
+
+                    tb_remove = function(){
+                                tb_position = old_tb_position;
+                                tb_remove = old_tb_remove;
+                                tb_remove();
+                    }
+
+                    tb_position = function() {
+                            var tbWindow = jQuery('#TB_window'), width = jQuery(window).width(), H = jQuery(window).height(), W = ( 1020 < width ) ? 1020 : width, adminbar_height = 0;
+
+                            if ( jQuery('body.admin-bar').length ){
+                                adminbar_height = 28;
+                            }
+
+                            if ( tbWindow.size() ) {
+                                    tbWindow.width( W - 50 ).height( H - 45 - adminbar_height );
+                                    jQuery('#TB_iframeContent').width( W - 50 ).height( H - 75 - adminbar_height );
+                                    tbWindow.css({'margin-left': '-' + parseInt((( W - 50 ) / 2),10) + 'px'});
+                                    if ( typeof document.body.style.maxWidth != 'undefined' )
+                                            tbWindow.css({'top': 20 + adminbar_height + 'px','margin-top':'0'});
+                            };
+
+                    };
+                }
+            </script>
             <?php 
 	}
         
