@@ -39,6 +39,7 @@ global $wpdb;
 
 <script id="nokia-maps_resultlist-old" type="text/template">
 	<div module="List">
+		 <div rel="list-pagination" class="nokia-pagination"></div>
         <ul each="{results.items}" rel="list-data" class="nokia-place-list">
             <li class="nokia-place-list-elem" rel="nokia-place-name">
 				<div class="nokia-blue-category-pin">
@@ -48,15 +49,16 @@ global $wpdb;
 				</div>
 				<p fill="{title}" class="nokia-place-name"></p>
                 <div class="nokia-place-address" fill="{vicinity}"></div>
-                    <span class="nokia-wordpress-preview-label">Select this place</span>
+               	<a class="nokia-wordpress-preview-label">Select this place</a>
+				<div class="clearb"></div>
             </li>
         </ul>
-        <div rel="list-pagination" class="nokia-pagination"></div>
     </div>
 </script>
 
 <script id="nokia-maps_resultlist" type="text/template">
 	<div module="List">
+		<div rel="list-pagination" class="nokia-pagination"></div>
         <ul each="{results.items}" rel="list-data" class="nokia-place-list">
             <li class="nokia-place-list-elem" rel="nokia-place">
 				<div class="nokia-list-elem-left">
@@ -68,9 +70,9 @@ global $wpdb;
 				<p fill="{title}" class="nokia-place-name"></p>
                 <div class="nokia-place-address" fill="{vicinity}"></div>
                 <a class="nokia-wordpress-preview-label" rel="nokia-place-select">Select this place</a>
+				<div class="clearb"></div>
             </li>
         </ul>
-        <div rel="list-pagination" class="nokia-pagination"></div>
     </div>
 </script>
 

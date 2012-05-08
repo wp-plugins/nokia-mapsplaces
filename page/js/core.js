@@ -668,6 +668,13 @@ jQuery( document ).ready( function(){
             template: 'nokia-maps_searchbox',
             maxResults: 96,
             map: map,
+            suggestions: {
+                limits: {
+                    maxSuggestions: 6,
+                    maxSaved: 3,
+                    maxSearched: 0
+                }  
+            },
             searchCenter: function () {
                 return {
                     latitude: 52.516274,

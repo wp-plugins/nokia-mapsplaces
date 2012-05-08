@@ -29,6 +29,9 @@ h1 {
 .hidden{
     display: none;
 }
+.clearb{
+    clear:both;
+}
 #wrapper{
     width: 905px;
     position: absolute;
