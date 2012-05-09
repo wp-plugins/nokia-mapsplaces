@@ -355,6 +355,11 @@ html, body {
     width: 250px;
 }
 
+.nokia-place-bubble.geo-loader{
+    height: 100px;
+    background: url('../images/loading2.gif') no-repeat 105px 37px;
+}
+
 .nokia-place-bubble *{
     font-family: Arial, Helvetica, sans-serif;
     margin:0px;

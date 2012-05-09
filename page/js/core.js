@@ -20,7 +20,10 @@ jQuery( document ).ready( function(){
         currentHref,
         currentPlaceData,
         infoBubbles,
-        contextMenu;
+        contextMenu,
+        revGeoBubble = false,
+        revGeoMarker,
+        revGeoReqId;
     
     var widget = window.location.search.match(/widgetMode=([^&]+)/);
 
@@ -490,42 +493,11 @@ jQuery( document ).ready( function(){
         });
         
         mapMarker.addListener('click',function(){
+            revGeoBubble = false;
             openBubble(place);
         });
     }
-    
-    customHandler = function(contextMenuEvent, group) {
-		var context = contextMenuEvent.target;
-		// If the current context target is a display, we add some entries to pan the map
-		if (context instanceof nokia.maps.map.Display) {
-			// An entry may have a text label and a callback to be invoked upon activation of the entry
-			var coords = context.pixelToGeo(contextMenuEvent.displayX, contextMenuEvent.displayY);
-            group.addEntry("Select this address", function(){
-                nokia.places.search.manager.reverseGeoCode({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude,
-                    onComplete: function(data, status){
-                        if (status === 'OK') {
-                            nokia.places.search.manager.findPlaces({
-                                searchCenter: coords,
-                                searchTerm: data.name,
-                                onComplete: function(res, st){
-                                    if (st === 'OK') {
-                                        var searched = jsMotif.selector.getData.call(res, 'results.items[0]');
-                                        if (searched) {
-                                            setPlaceData(searched);
-                                        }
-                                    }
-                                }
-                            })
-                        }
-                    }
-                })
-                
-            });
-            
-		}
-	};
+   
     
     function loadMap (){
         //initialize infobubbles 
@@ -536,11 +508,11 @@ jQuery( document ).ready( function(){
             new nokia.maps.map.component.Behavior(),
             new nokia.maps.map.component.ZoomBar(),
             new nokia.maps.map.component.TypeSelector(),
-            infoBubbles,
-            contextMenu
+            infoBubbles//,
+          //  contextMenu
         ];
         
-		contextMenu.addHandler(customHandler);
+		//contextMenu.addHandler(customHandler);
         
 		jQuery('#map').addClass('hidden');
         map = new nokia.maps.map.Display(document.getElementById("map"), {
@@ -555,8 +527,50 @@ jQuery( document ).ready( function(){
 		l.locate();
 		jQuery('#map').removeClass('hidden');
 
-
-
+        
+		map.addListener('click',function(ev){
+		   if(ev.button === 2){
+		       var coords = map.pixelToGeo(ev.displayX, ev.displayY);
+		       nokia.places.search.manager.reverseGeoCode({
+                   latitude: coords.latitude,
+                   longitude: coords.longitude,
+                   onComplete: function(data, status){
+                       if (status === 'OK') {
+                           revGeoBubble = true;
+                           var mapCoords =  new nokia.maps.geo.Coordinate(data.location.position.latitude, data.location.position.longitude, null, true);
+                           infoBubbles.addBubble('<div class="nokia-place-bubble geo-loader"></div>',mapCoords);
+                           
+                           if(revGeoMarker){
+                               map.objects.remove(revGeoMarker);    
+                           }
+                           
+                           if(revGeoReqId){
+                               nokia.places.comm.data.abortRequest(revGeoReqId);
+                           }
+                           
+                           revGeoMarker = new nokia.maps.map.StandardMarker(mapCoords);
+                           map.objects.add(revGeoMarker);
+                           
+                           revGeoReqId = nokia.places.search.manager.findPlaces({
+                               searchCenter: coords,
+                               searchTerm: data.name,
+                               onComplete: function(res, st){
+                                   if (st === 'OK') {
+                                       var searched = jsMotif.selector.getData.call(res, 'results.items[0]');
+                                       if (searched && revGeoBubble) {
+                                           console.log(searched);
+                                           openBubble(searched);
+                                       }
+                                   }
+                               }
+                           })
+                       }
+                   }
+               })
+		   }
+		})
+		
+        
         placeWidget = new nokia.places.widgets.Place({
             targetNode: 'placeWidget',
             moduleParams: {
