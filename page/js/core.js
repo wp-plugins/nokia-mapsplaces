@@ -411,8 +411,9 @@ jQuery( document ).ready( function(){
     }
     
     
-    function openBubble(place){
-        infoBubbles.addBubble('', new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true));
+    function openBubble(place, atCoords){
+        atCoords = atCoords || new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true);
+        infoBubbles.addBubble('', atCoords);
         var contentNode = infoBubbles.findElement("nm_bubble_content");
         if(!contentNode){
             contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
@@ -558,8 +559,7 @@ jQuery( document ).ready( function(){
                                    if (st === 'OK') {
                                        var searched = jsMotif.selector.getData.call(res, 'results.items[0]');
                                        if (searched && revGeoBubble) {
-                                           console.log(searched);
-                                           openBubble(searched);
+                                           openBubble(searched, mapCoords);
                                        }
                                    }
                                }
