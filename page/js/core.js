@@ -180,26 +180,7 @@ jQuery( document ).ready( function(){
 		
         // Now href should be given precedence
 		options.href = currentHref.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
-		/*
-		if (data.href) {
-			options.href = data.href;
-		} else
-        if (data.placeId){
-            options.placeId = data.placeId;
-        }else{
-            //or use data
-            var place_data = renderJSON(data);
-            
-            var i = 0;
-            do{
-                i++;
-                options['place_data_'+i] = place_data.substr(0, 255);
-                place_data = place_data.substr(255, place_data.length);
-            }while(place_data.length > 0);
-            options.place_data_params = i;
-        }
-		*/
-        
+		
         for(var i in options){
             if(!options[i]){
                 continue;
@@ -210,6 +191,10 @@ jQuery( document ).ready( function(){
 		var jslMap = placeWidget.template.getModules('Map')[0].jslMap;
 		tagtext += ' zoomLevel="' + jslMap.zoomLevel + '" ';
 		tagtext += ' tileType="' + ((jslMap.baseMapType == map.SATELLITE) ? 'satellite' : (jslMap.baseMapType == map.NORMAL) ?  'map' : 'terrain') + '" ';
+		if(revGeoBubble){
+		  tagtext += ' latitude="' + data.location.position.latitude + '" longitude="' + data.location.position.longitude + '" ';
+		  tagtext += ' title="' + data.name + '"';
+		}
         tagtext += '] ';
                     
         if(widget && widget[1]){
@@ -392,7 +377,7 @@ jQuery( document ).ready( function(){
     
     
     
-    function setPlaceData(data){
+    function setPlaceData(data, atCoords){
         //Show Advanced/Extended layout only for POIs
         if (!data) return;
         if (isPlace(data)) {
@@ -406,7 +391,24 @@ jQuery( document ).ready( function(){
         data.placeId = null;
         currentPlaceData = data;
         currentHref = data.href;
-        placeWidget.setPlace(data);
+        
+        if(atCoords){
+            nokia.places.manager.getPlaceData({
+                href: data.href,
+                onComplete: function(resp, status){
+                    if(status === 'OK'){
+                        if(resp && resp.location.position){
+                            resp.location.position.latitude = atCoords.latitude;
+                            resp.location.position.longitude = atCoords.longitude;
+                        }
+                        placeWidget.setData(resp);
+                    }
+                }
+            });
+        }else{
+            placeWidget.setPlace(data);         
+        }
+   
         showPlaceWidget();
     }
     
@@ -425,7 +427,7 @@ jQuery( document ).ready( function(){
                 rel: 'select-lnk',
                 name: 'click',
                 handler: function(place){
-                    setPlaceData(place)
+                    setPlaceData(place, atCoords)
                 }
             }]
         });
@@ -538,7 +540,7 @@ jQuery( document ).ready( function(){
                    onComplete: function(data, status){
                        if (status === 'OK') {
                            revGeoBubble = true;
-                           var mapCoords =  new nokia.maps.geo.Coordinate(data.location.position.latitude, data.location.position.longitude, null, true);
+                           var mapCoords =  new nokia.maps.geo.Coordinate(coords.latitude, coords.longitude, null, true);
                            infoBubbles.addBubble('<div class="nokia-place-bubble geo-loader"></div>',mapCoords);
                            
                            if(revGeoMarker){
@@ -559,6 +561,10 @@ jQuery( document ).ready( function(){
                                    if (st === 'OK') {
                                        var searched = jsMotif.selector.getData.call(res, 'results.items[0]');
                                        if (searched && revGeoBubble) {
+                                           if(searched.position){
+                                               searched.position.latitude = mapCoords.latitude;
+                                               searched.position.longitude = mapCoords.longitude;
+                                           }
                                            openBubble(searched, mapCoords);
                                        }
                                    }

@@ -126,34 +126,54 @@ if($_GET['place_data_params']){
                     document.getElementById('placewidget').className = data.displayOptions;
                 }
                 nokia.places.settings.setAppContext({appId: data.appId, authenticationToken: data.authenticationToken});  //remove
-                var place = new nokia.places.widgets.Place({
-                    targetNode: 'placewidget',
-                    template: data.template,
-                    placeId: data.placeId,
-                    href: data.href,
-                    moduleParams: {
-                        'Map': {
-                            iconUrl: 'images/pin.png',
-							centerOffset: templateOffsets[template]
-				<?php 
-					if ($_GET['zoomlevel']) echo ", zoom: {$_GET['zoomlevel']}";
-					if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
-				?>
-                       }
-                    },
-                    onReady: function(){
-                        if(data.place_data){
-                          place.setData(data.place_data); 
-                        }
-                    },
-                    onRender: function(){ 
-                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-compact,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('width', data.sizes.width+'px')
-                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('height', data.sizes.height+'px')
-                        jQuery('#content .nokia-places-blue-map .nokia-place-map-container,#content .nokia-place-extended-details-container,#content .nokia-places-blue-compact').css('height', data.sizes.height+'px')
-                    }
-                });
+
+				nokia.places.manager.getPlaceData({
+					placeId: data.placeId,
+					href: data.href,
+					onComplete: function(respData, status){
+
+						if(status === 'OK'){
+						
+			                var place = new nokia.places.widgets.Place({
+			                    targetNode: 'placewidget',
+			                    template: data.template,
+			                    moduleParams: {
+			                        'Map': {
+			                            iconUrl: 'images/pin.png',
+										centerOffset: templateOffsets[template]
+							<?php 
+								if ($_GET['zoomlevel']) echo ", zoom: {$_GET['zoomlevel']}";
+								if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
+							?>
+			                       }
+			                    },
+			                    onReady: function(){
+			                        if(data.place_data){
+				                    	place.setData(data.place_data); 
+				                    }else{
+				                        <?php 
+				                        	if ($_GET['latitude']) echo "respData.location.position.latitude = {$_GET['latitude']};";
+				                        	if ($_GET['longitude']) echo "respData.location.position.longitude = {$_GET['longitude']};";
+				                        	if ($_GET['title']) echo "respData.name = '{$_GET['title']}';";
+				                        ?>
+				                        place.setData(respData);
+						            }
+			                    },
+			                    onRender: function(){ 
+			                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-compact,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('width', data.sizes.width+'px')
+			                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('height', data.sizes.height+'px')
+			                        jQuery('#content .nokia-places-blue-map .nokia-place-map-container,#content .nokia-place-extended-details-container,#content .nokia-places-blue-compact').css('height', data.sizes.height+'px')
+			                    }
+			                });
+							
+							
+					    }   
+
+					}
                 
-            }
+            	});
+
+            };
          
         </script>
     </body>

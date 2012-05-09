@@ -80,8 +80,11 @@ function nokia_place_shortcode($atts, $c) {
         'template' => '',
         'sizes' => '',
         'display_options' => '',
-	 'tiletype' => '',
-	 'zoomlevel' => ''
+		 'tiletype' => '',
+		 'zoomlevel' => '',
+		 'latitude' => '',
+		 'longitude' => '',
+		 'title' => ''
    );
     
     if($atts['place_data_params']){
