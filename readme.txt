@@ -47,6 +47,19 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 5. Nokia Maps&Places widget in a post
 
 == Changelog ==
+= 1.5.0 =
+* Geo Ip Location is used for initial map position
+* Map Right Click location selection
+* Introducing preview bubble during result selection
+* Possible place selection and zoom into place from the preview bubble
+* More search results displayed on map
+* Improved searching experience
+* Rendered map icons are clickable
+* Instant zooming to cities, countries and administration areas when searched
+* Increasing popup window and map size
+* Introducing place title change
+* Coordinate (with no address) selection is possible
+* Fixed layout issues
 = 1.4.0 =
 * Nokia Maps API (2.2.0) used to generate Map and Places information
 * Introducing common identifier for both Places and Addresses (href parameter in shortcode)

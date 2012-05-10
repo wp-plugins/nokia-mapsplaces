@@ -448,29 +448,6 @@ jQuery( document ).ready( function(){
         showPlaceWidget();
     }
     
-    
-    function openBubble(place, atCoords, isPureCoords){
-        atCoords = atCoords || new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true);
-        infoBubbles.addBubble('', atCoords);
-        var contentNode = infoBubbles.findElement("nm_bubble_content");
-        if(!contentNode){
-            contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
-        }
-        
-        var bubbleWidget = new nokia.places.widgets.Place({
-            template: 'nokia-maps_bubble',
-            events: [{
-                rel: 'select-lnk',
-                name: 'click',
-                handler: function(place){
-                    setPlaceData(place, atCoords, isPureCoords)
-                }
-            }]
-        });
-        
-        bubbleWidget.setData(place, contentNode);
-    }
-    
     function zoomMapToPoints(points){
         var coords = (points instanceof Array)? points : points.results.items,
             mapCoords = [];
@@ -525,6 +502,36 @@ jQuery( document ).ready( function(){
             
         }
     }
+    
+    
+    function openBubble(place, atCoords, isPureCoords){
+        atCoords = atCoords || new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true);
+        infoBubbles.addBubble('', atCoords);
+        var contentNode = infoBubbles.findElement("nm_bubble_content");
+        if(!contentNode){
+            contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
+        }
+        
+        var bubbleWidget = new nokia.places.widgets.Place({
+            template: 'nokia-maps_bubble',
+            events: [{
+                rel: 'select-lnk',
+                name: 'click',
+                handler: function(place){
+                    setPlaceData(place, atCoords, isPureCoords)
+                }
+            },{
+                rel: 'zoom-lnk',
+                name: 'click',
+                handler: function(place){
+                    zoomMapToPoint(place.position, 17);
+                }
+            }]
+        });
+        
+        bubbleWidget.setData(place, contentNode);
+    }
+    
     
     function addMarkerEvents(mapMarker, place){
         mapMarker.addListener('mouseenter', function(){
@@ -639,7 +646,14 @@ jQuery( document ).ready( function(){
 		   }
 		})
 		
-        
+        map.addObserver('zoomLevel',function(map, propName, val){
+           if(val >= 17){
+               jQuery('#bubbleZoomIn').hide();
+           }else{
+               jQuery('#bubbleZoomIn').show();
+           }
+        });
+		
         placeWidget = new nokia.places.widgets.Place({
             targetNode: 'placeWidget',
             moduleParams: {

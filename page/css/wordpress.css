@@ -396,9 +396,15 @@ html, body {
 }
 
 .nokia-place-bubble .nokia-place-select{
-    text-align: center;
+    list-style: none;
     clear: both;
     margin: 10px 0px 0px 0px;
+    height: 10px;
+}
+
+.nokia-place-bubble .nokia-place-select li{
+    float: left;
+    margin-right:10px;
 }
 
 .nokia-place-bubble .nokia-place-select a{

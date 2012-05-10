@@ -83,9 +83,10 @@ global $wpdb;
 		<h3 fill="{title}" class="nokia-place-name"></h3>
     	<span fill="{category.name}" class="nokia-place-category"></span>
     	<div fill="{vicinity}" class="nokia-bubble-summary"></div>
-		<div class="nokia-place-select">
-			<a rel="select-lnk">Select this place</a>
-		</div>
+		<ul class="nokia-place-select">
+			<li><a rel="select-lnk">Select this place</a></li>
+			<li><a id="bubbleZoomIn" rel="zoom-lnk">Zoom in</a></li>
+		</ul>
 	</div>  
 </script>
 
