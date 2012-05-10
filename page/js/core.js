@@ -497,9 +497,12 @@ jQuery( document ).ready( function(){
         map.zoomTo(getMapsBBox(boundingBox), false);
     }
     
-    function zoomMapToPoint(coords){
+    function zoomMapToPoint(coords, zoom){
         var mapCoords = new nokia.maps.geo.Coordinate(coords.latitude, coords.longitude, null, true);
         map.setCenter(mapCoords);
+        if(zoom){
+            map.set('zoomLevel', zoom);
+        }
     }
     
     function isInView(place){
@@ -760,8 +763,12 @@ jQuery( document ).ready( function(){
 				    
 				    var firstResult = data.results.items[0];
 				    //if first result (most relevant) is a city or a country (administrative region) then show it's bounds
-                    if(firstResult.boundingBox && (firstResult.category.categoryId === 'administrative-region' || firstResult.category.categoryId === 'city-town-village')){
-                        zoomMapToBoundingBox(firstResult.boundingBox)
+                    if(firstResult.category.categoryId === 'administrative-region' || firstResult.category.categoryId === 'city-town-village'){
+                        if(firstResult.boundingBox){
+                            zoomMapToBoundingBox(firstResult.boundingBox);
+                        }else{
+                            zoomMapToPoint(firstResult.position, 11);
+                        }
                     }else{
                         zoomMapToPoints(data);
                     }
