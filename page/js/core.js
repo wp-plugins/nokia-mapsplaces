@@ -72,9 +72,17 @@ jQuery( document ).ready( function(){
         jQuery('#wrapper').removeClass('mapEnabled');
 		showDisplayOptions (widget ? 'nokia.blue.compact' : 'nokia.blue.place');
     }
+    
+    function tplIsPlace(jsonData){
+        if(jsonData && jsonData.location && jsonData.location.address){
+            return true;
+        }
+        
+        return false;
+    }
 
     function hidePlaceWidget(){
-	
+	console.log('hide')
         if(widget){
           setLayout.call(jQuery('#layoutOptions li#layoutCompact')[0]);
         }
@@ -97,6 +105,9 @@ jQuery( document ).ready( function(){
                     iconUrl: 'images/pin.png',
 					tileType: getTileTypeText(map.baseMapType)
                 }
+            },
+            functions: {
+                isPlace: tplIsPlace
             },
             template: template
         });
@@ -251,7 +262,7 @@ jQuery( document ).ready( function(){
 	}
 
 	function setLayout(){
-	
+	console.log('set layout');
 		// Center offsets for templates
 		// To be removed when passing zoomLevel and tileType parameters do not overwrite other module params (like standard offsets)
 		var templateOffsets = {
@@ -310,7 +321,9 @@ jQuery( document ).ready( function(){
 						centerOffset: templateOffsets[activeTemplate],
 						tileType: getTileTypeText(placeWidget.template.getModules("Map")[0].jslMap.baseMapType)
 					}
-				},
+				},functions:{
+	                isPlace: tplIsPlace
+	            },
 				template: activeTemplate
 			});
 			placeWidget.setData (currentPlaceData);
@@ -646,6 +659,9 @@ jQuery( document ).ready( function(){
                 'Map': {
                     iconUrl: 'images/pin.png'
                 }
+            },
+            functions:{
+                isPlace: tplIsPlace
             },
             template: widget ? 'nokia.blue.compact' : 'nokia.blue.place'
         });
