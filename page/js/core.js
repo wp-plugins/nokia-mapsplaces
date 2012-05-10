@@ -94,7 +94,8 @@ jQuery( document ).ready( function(){
             targetNode: 'placeWidget',
             moduleParams: {
                 'Map': {
-                    iconUrl: 'images/pin.png'
+                    iconUrl: 'images/pin.png',
+					tileType: getTileTypeText(map.baseMapType)
                 }
             },
             template: template
@@ -231,6 +232,10 @@ jQuery( document ).ready( function(){
         return parent.tb_remove()
     }
 	
+	function getTileTypeText(mapType) {
+		return ((mapType == nokia.maps.map.Display.SATELLITE) ? 'satellite' : (mapType == nokia.maps.map.Display.NORMAL) ?  'map' : 'terrain');
+	}	
+	
     function showDisplayOptions (template) {
 		var checkbox,
 				options = displayOptions[template];
@@ -302,7 +307,8 @@ jQuery( document ).ready( function(){
 				moduleParams: {
 					'Map': {
 						iconUrl: 'images/pin.png',
-						centerOffset: templateOffsets[activeTemplate]
+						centerOffset: templateOffsets[activeTemplate],
+						tileType: getTileTypeText(placeWidget.template.getModules("Map")[0].jslMap.baseMapType)
 					}
 				},
 				template: activeTemplate
@@ -562,7 +568,22 @@ jQuery( document ).ready( function(){
 		var l = new Locator({map:map});
 		l.locate();
 		jQuery('#map').removeClass('hidden');
-
+		
+		// Re-create placeWidget whenever user chooses tile type to have initial widget tiling according to user's choice
+		map.addObserver('baseMapType', function(ob, key, value){
+			var activeTemplate  = widget ? 'nokia.blue.compact' : 'nokia.blue.place';
+			placeWidget = new nokia.places.widgets.Place({
+				targetNode: 'placeWidget',
+				moduleParams: {
+					'Map': {
+						iconUrl: 'images/pin.png',
+						tileType: getTileTypeText(map.baseMapType)
+					}
+				},
+				template: activeTemplate/*,
+				onData: setJSLMapParams*/
+			});
+		});
         
 		map.addListener('click',function(ev){
 		   if(ev.button === 2){
