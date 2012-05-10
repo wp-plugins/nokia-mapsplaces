@@ -26,7 +26,7 @@ function Locator(params){
 	///////// Detection Methods /////////
 	function ipLookUp()
 	{
-		logMessage("Trying IP Lookup");		
+		//logMessage("Trying IP Lookup");		
 		jQuery.ajax({
 			url:"http://maps.nokia.com/services/iplookup/get?callback=?",
 			dataType:"json",
@@ -53,7 +53,7 @@ function Locator(params){
 	}
 
 	function detectFromBrowser(){
-		logMessage("Trying Browser Detect");
+		//logMessage("Trying Browser Detect");
 		var userLang = (navigator.language) ? navigator.language : navigator.userLanguage; 
 		userLang = userLang.split('-');
 		var searchTerm;
@@ -153,7 +153,7 @@ function Locator(params){
 	}
 	
 	function geoLocate(){
-		logMessage("Trying geolocation");
+		//logMessage("Trying geolocation");
 		
 		var geoLocation = (navigator) ? navigator.geolocation : null;
 		if(!geoLocation)
@@ -176,7 +176,7 @@ function Locator(params){
 	}
 
 	function fallToPrague(){
-		logMessage("Last resort :(");
+		//logMessage("Last resort :(");
 		
 		var prague = {
 					position:{
@@ -212,7 +212,7 @@ function Locator(params){
 			this.located = true;
 			
 		if(data.boundingBox){
-			logMessage("FOUND A BBOX");
+			//logMessage("FOUND A BBOX");
 			if(self.map){				
 				var bbox = new nokia.maps.geo.BoundingBox(
 					new nokia.maps.geo.Coordinate(data.boundingBox.topLeft.latitude, data.boundingBox.topLeft.longitude),
@@ -222,7 +222,7 @@ function Locator(params){
 			}
 		}
 		else if(data.position){	
-			logMessage("FOUND "+data.position.latitude+":"+data.position.longitude);	
+			//logMessage("FOUND "+data.position.latitude+":"+data.position.longitude);	
 			if(self.map){
 				self.map.setCenter(data.position);
 				
