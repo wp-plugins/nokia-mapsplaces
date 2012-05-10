@@ -214,6 +214,14 @@ h1 {
     float: right;
 }
 
+#layoutTab .contentLeft{
+    width: 300px;
+}
+
+#layoutTab .contentLeft.title{
+    width: 500px;
+}
+
 .tab ul#layoutOptions {
     list-style: none;
 }
@@ -262,7 +270,7 @@ h1 {
     width: 130px;
     float: left;
 }
-.tab .sizes input{
+.tab .sizes input, .tab .contentLeft .input{
     background-color: #FFFFFF;
     border-color: #DFDFDF;
     border-radius: 6px 6px 6px 6px;
@@ -274,6 +282,13 @@ h1 {
     padding: 7px 14px 5px 10px;
     width: 50px;    
 }
+
+.tab .contentLeft .input{
+    width: 350px;
+    margin-top: 10px;
+}
+
+
 .tab .fixedSizes a{
     background: #F5F5F5;
     padding: 10px 5px;
@@ -292,7 +307,7 @@ h1 {
     color: #FFF;
     background: #D55226;
 }
-.labelText{
+.labelText, .label{
     color: #aaa;
     font-style: italic;
 }

@@ -22,10 +22,14 @@ jQuery( document ).ready( function(){
         infoBubbles,
         contextMenu,
         revGeoBubble = false,
+        isTitleChanged = false,
+        currentTitle = '',
+        newTitle = '',
         revGeoMarker,
         revGeoReqId;
     
-    var widget = window.location.search.match(/widgetMode=([^&]+)/);
+    var widget = window.location.search.match(/widgetMode=([^&]+)/),
+        titleSelector = '.nokia-place-name > span, .nokia-place-extended-details > .nokia-place-name, .nokia-place-bottom-inner > .nokia-place-name';
 
     var displayOptions = {
         "nokia.blue.compact": [
@@ -193,8 +197,11 @@ jQuery( document ).ready( function(){
 		tagtext += ' tileType="' + ((jslMap.baseMapType == map.SATELLITE) ? 'satellite' : (jslMap.baseMapType == map.NORMAL) ?  'map' : 'terrain') + '" ';
 		if(revGeoBubble){
 		  tagtext += ' latitude="' + data.location.position.latitude + '" longitude="' + data.location.position.longitude + '" ';
-		  tagtext += ' title="' + data.name + '"';
 		}
+		if(isTitleChanged){
+		    tagtext += ' title="' + newTitle + '"';
+		}
+		
         tagtext += '] ';
                     
         if(widget && widget[1]){
@@ -299,6 +306,9 @@ jQuery( document ).ready( function(){
 				template: activeTemplate
 			});
 			placeWidget.setData (currentPlaceData);
+			if(isTitleChanged){
+			    jQuery(titleSelector).text(newTitle);
+			}
 			showDisplayOptions(activeTemplate);
 		}
     }
@@ -408,7 +418,11 @@ jQuery( document ).ready( function(){
         }else{
             placeWidget.setPlace(data);         
         }
-   
+        
+        isTitleChanged = false;
+        currentTitle = data.title;
+        newTitle = '';
+        jQuery('#customTitle').val(currentTitle);
         showPlaceWidget();
     }
     
@@ -748,7 +762,41 @@ jQuery( document ).ready( function(){
     }
 
     
-
+    var titleInput = jQuery('#customTitle');
+    
+    titleInput.bind('focus',function(){
+        var value = titleInput.val();
+        if(value === currentTitle){
+            titleInput.val('');
+            titleInput.removeClass('label');
+        }
+    });
+    
+    titleInput.bind('blur',function(){
+       var value = titleInput.val();
+       if(!isTitleChanged || !value){
+           titleInput.val(currentTitle);
+           titleInput.addClass('label');
+           jQuery(titleSelector).text(currentTitle);
+           isTitleChanged = false;
+       } 
+    });
+    
+    titleInput.bind('keyup',function(){
+        var value = jQuery.trim(titleInput.val());
+        if(value !== currentTitle){
+            if(!value){
+                value = currentTitle;
+                isTitleChanged = false;
+            }else{
+                isTitleChanged = true;
+                newTitle = value;
+            }
+            jQuery(titleSelector).text(value);
+        }else{
+            isTitleChanged = false;
+        }
+    })
     
     jQuery('.checkboxContainer input').bind('change', toogleDisplayOption);
     jQuery('#layoutOptions li').bind('click', setLayout);

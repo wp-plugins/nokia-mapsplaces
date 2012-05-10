@@ -134,8 +134,8 @@ global $wpdb;
             <div class="settings">
 
                 <div id="layoutTab" class="tab">
-                    <h5>Layout</h5>
                     <div class="contentLeft">
+                    	<h5>Layout</h5>
                         <ul id="layoutOptions">
                             <li id="layoutCompact" rel="nokia.blue.compact"></li>
                             <li id="layoutMap" rel="nokia.blue.map"></li>
@@ -147,8 +147,10 @@ global $wpdb;
                         </ul>
                         
                     </div>
-                    <div class="contentRight">
-<!--
+                    <div class="contentLeft title">
+                    	<h5>Title</h5>
+                    	<input id="customTitle" type="text" name="title" class="input label">
+<!--				
                         <input type="radio" name="theme" checked="1" value="dark"> Dark 
                         <input type="radio" name="theme" value="bright"> Bright 
 -->
