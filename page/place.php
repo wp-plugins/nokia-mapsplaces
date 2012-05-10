@@ -121,13 +121,6 @@ if($_GET['place_data_params']){
                 data.sizes.width = 0 === data.sizes.width ? 220 : data.sizes.width;
             }
 
-            function tplIsPlace(jsonData){
-                if(jsonData && jsonData.location && jsonData.location.address){
-                    return true;
-                }
-                
-                return false;
-            }
 
 			function initWidget(placeData) {
 			    var place = new nokia.places.widgets.Place({
@@ -142,9 +135,6 @@ if($_GET['place_data_params']){
 						if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
 					?>
                        }
-                    },
-                    functions: {
-                        isPlace: tplIsPlace
                     },
                     onReady: function(){
 						place.setData(placeData);
