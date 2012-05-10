@@ -121,57 +121,80 @@ if($_GET['place_data_params']){
                 data.sizes.width = 0 === data.sizes.width ? 220 : data.sizes.width;
             }
 
+
+			function initWidget(placeData) {
+			    var place = new nokia.places.widgets.Place({
+                    targetNode: 'placewidget',
+                    template: data.template,
+                    moduleParams: {
+                        'Map': {
+                            iconUrl: 'images/pin.png',
+							centerOffset: templateOffsets[template]
+					<?php 
+						if ($_GET['zoomlevel']) echo ", zoom: {$_GET['zoomlevel']}";
+						if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
+					?>
+                       }
+                    },
+                    onReady: function(){
+						place.setData(placeData);
+                    },
+                    onRender: function(){ 
+                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-compact,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('width', data.sizes.width+'px')
+                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('height', data.sizes.height+'px')
+                        jQuery('#content .nokia-places-blue-map .nokia-place-map-container,#content .nokia-place-extended-details-container,#content .nokia-places-blue-compact').css('height', data.sizes.height+'px')
+                    }
+                });
+			}
+
+            
             var loadPlace = function(){
                 if(data.displayOptions){
                     document.getElementById('placewidget').className = data.displayOptions;
                 }
                 nokia.places.settings.setAppContext({appId: data.appId, authenticationToken: data.authenticationToken});  //remove
 
-				nokia.places.manager.getPlaceData({
-					placeId: data.placeId,
-					href: data.href,
-					onComplete: function(respData, status){
+				if(data.href || data.placeId){
+					nokia.places.manager.getPlaceData({
+						placeId: data.placeId,
+						href: data.href,
+						onComplete: function(respData, status){
+							if(status === 'OK'){
+							    if(data.place_data){
+							        initWidget(data.place_data); 
+			                    }else{
+			                        <?php 
+			                        	if ($_GET['latitude']) echo "respData.location.position.latitude = {$_GET['latitude']};";
+			                        	if ($_GET['longitude']) echo "respData.location.position.longitude = {$_GET['longitude']};";
+			                        	if ($_GET['title']) echo "respData.name = '{$_GET['title']}';";
+			                        ?>
+			                        initWidget(respData);
+					            }
+						    }   
+	
+						}
+	                
+	            	});
+				}else{
 
-						if(status === 'OK'){
-						
-			                var place = new nokia.places.widgets.Place({
-			                    targetNode: 'placewidget',
-			                    template: data.template,
-			                    moduleParams: {
-			                        'Map': {
-			                            iconUrl: 'images/pin.png',
-										centerOffset: templateOffsets[template]
-							<?php 
-								if ($_GET['zoomlevel']) echo ", zoom: {$_GET['zoomlevel']}";
-								if ($_GET['tiletype']) echo ", tileType: '{$_GET['tiletype']}'";
-							?>
-			                       }
-			                    },
-			                    onReady: function(){
-			                        if(data.place_data){
-				                    	place.setData(data.place_data); 
-				                    }else{
-				                        <?php 
-				                        	if ($_GET['latitude']) echo "respData.location.position.latitude = {$_GET['latitude']};";
-				                        	if ($_GET['longitude']) echo "respData.location.position.longitude = {$_GET['longitude']};";
-				                        	if ($_GET['title']) echo "respData.name = '{$_GET['title']}';";
-				                        ?>
-				                        place.setData(respData);
-						            }
-			                    },
-			                    onRender: function(){ 
-			                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-compact,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('width', data.sizes.width+'px')
-			                        jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('height', data.sizes.height+'px')
-			                        jQuery('#content .nokia-places-blue-map .nokia-place-map-container,#content .nokia-place-extended-details-container,#content .nokia-places-blue-compact').css('height', data.sizes.height+'px')
-			                    }
-			                });
-							
-							
-					    }   
+					var coords = {
+						latitude: <?php echo $_GET['latitude']?>,
+						longitude: <?php echo $_GET['longitude']?>
+					};
 
-					}
-                
-            	});
+					var title = '<?php echo $_GET['title']?>';
+					
+					var pureCoords = {};
+		            pureCoords.location = {};
+		            pureCoords.location.position = coords;
+		            pureCoords.categories = [];
+		            pureCoords.categories.push({
+		                icon: 'http://download.vcdn.nokia.com/p/d/places2/icons/categories/06.icon'
+		            });
+		            pureCoords.name = title || (coords.latitude + ', ' + coords.longitude);
+		            pureCoords.view = 'http://m.nokia.me?c=' + coords.latitude + ',' + coords.longitude + '&i&z=6';
+		            initWidget(pureCoords);
+				}
 
             };
          

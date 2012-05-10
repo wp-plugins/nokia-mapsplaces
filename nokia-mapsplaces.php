@@ -97,7 +97,7 @@ function nokia_place_shortcode($atts, $c) {
     $str = http_build_query($atts);
     preg_match("#height':\s?'(\d+)'#", $atts['sizes'], $size);
     
-    if ($atts['placeid'] || $atts['href'])
+    if ($atts['placeid'] || $atts['href'] || ($atts['latitude'] && $atts['longitude']))
 	$insert_code = create_nokia_places_post($str, $size[1]);
     else
 	$insert_code = create_nokia_places_legacy_post($str, $size[1]);
