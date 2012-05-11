@@ -193,7 +193,7 @@ jQuery( document ).ready( function(){
 		
         // Now href should be given precedence
         if(currentHref){
-		  options.href = currentHref.replace(/(app_id=[^&]+&?)/, '').replace(/(app_code=[^&]+&?)/, '');
+		  options.href = currentHref.replace(/([\?&]app_id=[^&]+)/, '').replace(/([\?&]app_code=[^&]+)/, '');
         }
         
         for(var i in options){
