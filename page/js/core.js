@@ -834,7 +834,6 @@ jQuery( document ).ready( function(){
     titleInput.bind('focus',function(){
         var value = titleInput.val();
         if(value === currentTitle){
-            titleInput.val('');
             titleInput.removeClass('label');
         }
     });
