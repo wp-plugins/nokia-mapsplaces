@@ -73,6 +73,14 @@ jQuery( document ).ready( function(){
 		showDisplayOptions (widget ? 'nokia.blue.compact' : 'nokia.blue.place');
     }
 
+    function handleZoomInLink(val){
+        if(val >= 17){
+           jQuery('#bubbleZoomIn').hide();
+       }else{
+           jQuery('#bubbleZoomIn').show();
+       }
+    }
+
     function hidePlaceWidget(){
 	
         if(widget){
@@ -530,6 +538,7 @@ jQuery( document ).ready( function(){
         });
         
         bubbleWidget.setData(place, contentNode);
+        handleZoomInLink(map.get('zoomLevel'));
     }
     
     
@@ -547,6 +556,15 @@ jQuery( document ).ready( function(){
         });
     }
    
+    
+    function createCoordsPlace(coords){
+       var coordsPlace = {};
+       coordsPlace.position = coords;
+       coordsPlace.title = coords.latitude + ', ' + coords.longitude;
+       coordsPlace.category = {};
+       coordsPlace.category.icon = 'http://download.vcdn.nokia.com/p/d/places2/icons/categories/06.icon';
+       return coordsPlace;
+    }
     
     function loadMap (){
         //initialize infobubbles 
@@ -599,7 +617,9 @@ jQuery( document ).ready( function(){
                    latitude: coords.latitude,
                    longitude: coords.longitude,
                    onComplete: function(data, status){
-                       var mapCoords =  new nokia.maps.geo.Coordinate(coords.latitude, coords.longitude, null, true);
+                       var mapCoords =  new nokia.maps.geo.Coordinate(coords.latitude, coords.longitude, null, true),
+                           coordsPlace = createCoordsPlace(coords);
+                       
                        revGeoBubble = true;
                        
                        if(revGeoMarker){
@@ -629,17 +649,17 @@ jQuery( document ).ready( function(){
                                                searched.position.longitude = mapCoords.longitude;
                                            }
                                            openBubble(searched, mapCoords);
+                                           addMarkerEvents(revGeoMarker,searched);
                                        }
+                                   }else{
+                                       openBubble(coordsPlace, mapCoords, true);
+                                       addMarkerEvents(revGeoMarker,coordsPlace);
                                    }
                                }
                            })
                        }else{
-                           var coordsPlace = {};
-                           coordsPlace.position = coords;
-                           coordsPlace.title = coords.latitude + ', ' + coords.longitude;
-                           coordsPlace.category = {};
-                           coordsPlace.category.icon = 'http://download.vcdn.nokia.com/p/d/places2/icons/categories/06.icon';
                            openBubble(coordsPlace, mapCoords, true);
+                           addMarkerEvents(revGeoMarker,coordsPlace);
                        }
                    }
                })
@@ -647,11 +667,7 @@ jQuery( document ).ready( function(){
 		})
 		
         map.addObserver('zoomLevel',function(map, propName, val){
-           if(val >= 17){
-               jQuery('#bubbleZoomIn').hide();
-           }else{
-               jQuery('#bubbleZoomIn').show();
-           }
+           handleZoomInLink(val);
         });
 		
         placeWidget = new nokia.places.widgets.Place({
