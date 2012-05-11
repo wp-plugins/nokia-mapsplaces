@@ -3,7 +3,7 @@ Contributors: Skowron, radek.adamczyk, marekkrysiuk, time4ostry
 Tags: geo, location, maps, mapping, nokia, cross-browser, widget, places, nokia maps, address
 Requires at least: 2.9
 Tested up to: 3.3
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 
 With Nokia Maps & Places plugin you can easily add places and addresses into your Wordpress posts or pages.
 
@@ -21,13 +21,13 @@ Nokia Maps & Places is a plugin powered by [Nokia Maps API](http://api.maps.noki
 * Support for dashboard QuickPress
 * All required data is stored in a shortcode, no additional tables needed
 * Readers of your blog will be able to:
- * Pan or zoom a map
- * Rate a place
- * Use contact information (phone number, e-mail, Web page)
- * See a place in Nokia Maps
- * Share a place on Facebook or Twitter with one click
- * Share a place on any Web site using an URL
- * If a place allows booking (hotels, etc.) - initiate booking with one click
+* Pan or zoom a map
+* Rate a place
+* Use contact information (phone number, e-mail, Web page)
+* See a place in Nokia Maps
+* Share a place on Facebook or Twitter with one click
+* Share a place on any Web site using an URL
+* If a place allows booking (hotels, etc.) - initiate booking with one click
 
 = Screencast =
 
@@ -48,17 +48,18 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 
 == Changelog ==
 = 1.5.0 =
-* Geo Ip Location is used for initial map position
-* Map Right Click location selection
+* Geo IP Location, then browser language preference is used for initial map position
+* Map Right Click location selection (possible coordinate selection when address is not available)
 * Introducing preview bubble during result selection
 * Possible place selection and zoom into place from the preview bubble
 * More search results displayed on map
 * Improved searching experience
 * Rendered map icons are clickable
 * Instant zooming to cities, countries and administration areas when searched
-* Increasing popup window and map size
+* Increasing Thickbox window and map size
 * Introducing place title change
-* Possible coordinate selection when address is not available
+* Tile type on "Customize your map" set according to tile type on "Search for the place or address" 
+* Improved support for legacy addresses 
 * Fixed layout issues
 = 1.4.0 =
 * Nokia Maps API (2.2.0) used to generate Map and Places information
