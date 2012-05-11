@@ -100,6 +100,11 @@ global $wpdb;
     </head>
     <body>
     <style>
+    	<!--[if lte IE 7]>
+		.nokia-place-bubble .nokia-place-name{
+			color: #000;
+		}
+		<![endif]-->
         .nokia-places-general-resultlist .nokia-place-name{
             cursor: pointer;
         }
