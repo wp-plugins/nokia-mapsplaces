@@ -178,8 +178,8 @@ if($_GET['place_data_params']){
 				}else{
 
 					var coords = {
-						latitude: <?php echo $_GET['latitude']?>,
-						longitude: <?php echo $_GET['longitude']?>
+						latitude: <?php if ($_GET['latitude']) echo $_GET['latitude']; else echo "''";?>,
+						longitude: <?php if ($_GET['longitude']) echo $_GET['longitude']; else echo "''";?>
 					};
 
 					var title = '<?php echo $_GET['title']?>';
