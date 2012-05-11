@@ -256,6 +256,7 @@ html, body {
 
 .nokia-places-wordpress-searchbox.suggest .nokia-searchbox-input{
     border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     border-color: #CCCCCC;
     box-shadow: none;
 }
@@ -301,7 +302,7 @@ html, body {
     font-size: 14px;
     overflow: hidden;
     position: absolute;
-    width: 207px;
+    width: 334px;
     z-index: 10000;
 }
 
