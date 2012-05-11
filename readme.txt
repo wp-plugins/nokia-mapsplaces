@@ -44,7 +44,9 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 2. Place search with suggestion list
 3. Search results
 4. Customize your map
-5. Nokia Maps&Places widget in a post
+5. Nokia Maps & Places widget in a post
+6. Shortcode example
+7. Select any place with right-click and use it in your widget
 
 == Changelog ==
 = 1.5.0 =
