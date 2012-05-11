@@ -10,7 +10,7 @@
 */
 jQuery( document ).ready( function(){
 
-    nokia.places.settings.setAppContext({appId: 'I5YGccWtqlFgymFvzbq1', authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg'});  //remove
+    nokia.places.settings.setAppContext({appId: 'uk8iCZheHETM0B63cPxG', authenticationToken: 'TGtRnNzFDZkZ1dRJaKvdTQ'});  //remove
 
     /**
      * Object used in all functions

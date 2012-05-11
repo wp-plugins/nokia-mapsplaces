@@ -87,8 +87,8 @@ if($_GET['place_data_params']){
             var template = "<?php echo $_GET['template'] ?>";
 
             var data = {
-                appId: 'I5YGccWtqlFgymFvzbq1',
-                authenticationToken: 'L6NaX3SgOkROXjtP-oLPSg',
+                appId: 'uk8iCZheHETM0B63cPxG',
+                authenticationToken: 'TGtRnNzFDZkZ1dRJaKvdTQ',
 				"template": template,
                 <?php
 				$placeHref = $_GET['href'];
