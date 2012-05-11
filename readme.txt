@@ -47,6 +47,7 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 5. Nokia Maps & Places widget in a post
 6. Shortcode example
 7. Select any place with right-click and use it in your widget
+8. Use any place and customize place name
 
 == Changelog ==
 = 1.5.0 =
