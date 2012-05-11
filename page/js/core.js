@@ -650,6 +650,9 @@ jQuery( document ).ready( function(){
                                            }
                                            openBubble(searched, mapCoords);
                                            addMarkerEvents(revGeoMarker,searched);
+                                       }else if(!searched && revGeoBubbe){
+                                           openBubble(coordsPlace, mapCoords, true);
+                                           addMarkerEvents(revGeoMarker,coordsPlace);
                                        }
                                    }else{
                                        openBubble(coordsPlace, mapCoords, true);
