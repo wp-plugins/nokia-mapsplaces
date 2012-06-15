@@ -205,7 +205,7 @@ jQuery( document ).ready( function(){
         }
 		var jslMap = placeWidget.template.getModules('Map')[0].jslMap;
 		tagtext += ' zoomLevel="' + jslMap.zoomLevel + '" ';
-		tagtext += ' tileType="' + ((jslMap.baseMapType == map.SATELLITE) ? 'satellite' : (jslMap.baseMapType == map.NORMAL) ?  'map' : 'terrain') + '" ';
+		tagtext += ' tileType="' + getTileTypeText (jslMap.baseMapType) + '" ';
 		if(revGeoBubble){
 		  tagtext += ' latitude="' + data.location.position.latitude + '" longitude="' + data.location.position.longitude + '" ';
 		}
@@ -241,7 +241,7 @@ jQuery( document ).ready( function(){
     }
 	
 	function getTileTypeText(mapType) {
-		return ((mapType == nokia.maps.map.Display.SATELLITE) ? 'satellite' : (mapType == nokia.maps.map.Display.NORMAL) ?  'map' : 'terrain');
+		return ((mapType == nokia.maps.map.Display.SATELLITE) ? 'satellite' : (mapType == nokia.maps.map.Display.TERRAIN) ?  'terrain' : (mapType == nokia.maps.map.Display.SMART_PT) ? 'transit' : (mapType == nokia.maps.map.Display.TRAFFIC) ? 'traffic' : 'map');
 	}	
 	
     function showDisplayOptions (template) {
