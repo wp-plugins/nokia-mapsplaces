@@ -514,8 +514,8 @@ jQuery( document ).ready( function(){
     
     function openBubble(place, atCoords, isPureCoords){
         atCoords = atCoords || new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true);
-        infoBubbles.addBubble('', atCoords);
-        var contentNode = infoBubbles.findElement("nm_bubble_content");
+        var bubble = infoBubbles.addBubble('', atCoords);
+        var contentNode = bubble.contentNode;
         if(!contentNode){
             contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
         }
@@ -805,7 +805,7 @@ jQuery( document ).ready( function(){
             },
             onResults: function (data) {
                 
-                infoBubbles.removeBubble();
+                infoBubbles.closeAll();
                 jQuery("#resultList").removeClass('loading');
                 
 				if (!data.results.items.length) {
