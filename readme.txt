@@ -48,6 +48,8 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 6. Shortcode example
 7. Select any place with right-click and use it in your widget
 8. Use any place and customize place name
+9. Include Nokia Maps Traffic into your place widgets
+10. Show public transport information in a widget
 
 == Changelog ==
 = 1.5.0 =
