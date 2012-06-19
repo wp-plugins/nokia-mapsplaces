@@ -575,6 +575,8 @@ jQuery( document ).ready( function(){
             new nokia.maps.map.component.Behavior(),
             new nokia.maps.map.component.ZoomBar(),
             new nokia.maps.map.component.TypeSelector(),
+			new nokia.maps.map.component.Traffic(),
+			new nokia.maps.map.component.PublicTransport(),
             infoBubbles//,
           //  contextMenu
         ];
