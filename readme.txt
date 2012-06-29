@@ -3,7 +3,7 @@ Contributors: Skowron, radek.adamczyk, marekkrysiuk, time4ostry
 Tags: geo, location, maps, mapping, nokia, cross-browser, widget, places, nokia maps, address
 Requires at least: 2.9
 Tested up to: 3.4
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 
 With Nokia Maps & Places plugin you can easily add places and addresses into your Wordpress posts or pages.
 
