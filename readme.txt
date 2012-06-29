@@ -11,13 +11,14 @@ With Nokia Maps & Places plugin you can easily add places and addresses into you
 
 = Nokia Maps for Your Blog =
 
-Nokia Maps & Places is a plugin powered by [Nokia Maps API](http://api.maps.nokia.com/en/places/intro.html). Add it to your blog to share information about your favorite places and to display maps.
+Official Nokia Maps & Places plugin is powered by [Nokia Maps API](http://api.maps.nokia.com/). Add it to your blog to share information about your favorite places and to display maps.
 
 = Features =
 
 * Easy to install: no need for additional configuration, adds a button to media insert/upload section
-* Easy to use: search using keywords, choose a place from a list and insert the place widget into the editor
+* Easy to use: search using keywords or right click on the map, choose a place from a list, edit place title and insert the place widget into the editor
 * Three ready-to-use templates to customize your places widget
+* Use different map tiles including public transport and traffic information tiles
 * Support for dashboard QuickPress
 * All required data is stored in a shortcode, no additional tables needed
 * Readers of your blog will be able to:
@@ -25,6 +26,7 @@ Nokia Maps & Places is a plugin powered by [Nokia Maps API](http://api.maps.noki
 * Rate a place
 * Use contact information (phone number, e-mail, Web page)
 * See a place in Nokia Maps
+* Get directions on Nokia Maps
 * Share a place on Facebook or Twitter with one click
 * Share a place on any Web site using an URL
 * If a place allows booking (hotels, etc.) - initiate booking with one click
