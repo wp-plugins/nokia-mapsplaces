@@ -14,9 +14,8 @@ if ((false === isset($_GET['placeid']) && false === isset($_GET['place_data']) &
 }
 
 preg_match("#'width':\s?'(\d+)','height':\s?'(\d+)'#", stripslashes($_GET['sizes']), $size);
-
+$place_data = '';
 if($_GET['place_data_params']){
-    $place_data = '';
     for($i = 1; $i <= $_GET['place_data_params']; $i++){
         $place_data .= $_GET['place_data_'.$i];
     }
@@ -30,6 +29,7 @@ if($_GET['place_data_params']){
     <head>
         <!--Insert unique frameid for resize function -->
         <meta id="iframeid" content="<?php echo $_GET['iframeid'] ?>"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 
         <script src="http://api.maps.nokia.com/2.2.1/jsl.js?with=places,maps" type="text/javascript"></script>

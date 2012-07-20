@@ -87,7 +87,7 @@ function nokia_place_shortcode($atts, $c) {
 		 'title' => ''
    );
     
-    if($atts['place_data_params']){
+    if(isset($atts['place_data_params'])){
         for($i = 1; $i <= $atts['place_data_params']; $i++){
             $map['place_data_'.$i] = '';
         }
