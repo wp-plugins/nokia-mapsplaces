@@ -1,6 +1,10 @@
 <?php
-wp_enqueue_script( 'thickbox' );
-wp_enqueue_style( 'thickbox' );
+function loadRequiredScripts(){
+	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_style( 'thickbox' );	
+}
+
+add_action('wp_enqueue_scripts', 'loadRequiredScripts');
 
 class NokiaMapsPlacesWidget extends WP_Widget {
 	/** constructor */

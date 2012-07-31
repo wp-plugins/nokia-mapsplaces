@@ -14,7 +14,7 @@ if ((false === isset($_GET['placeid']) && false === isset($_GET['place_data']) &
 }
 
 preg_match("#'width':\s?'(\d+)','height':\s?'(\d+)'#", stripslashes($_GET['sizes']), $size);
-$place_data = '';
+
 if($_GET['place_data_params']){
     for($i = 1; $i <= $_GET['place_data_params']; $i++){
         $place_data .= $_GET['place_data_'.$i];
@@ -94,7 +94,7 @@ if($_GET['place_data_params']){
 				$placeHref = $_GET['href'];
 				if ($placeHref) echo "href: '".html_entity_decode($placeHref)."',\n";
                 else if($_GET['placeid']) echo "placeId: '{$_GET['placeid']}',\n";
-                if($place_data) echo "place_data: {$place_data},\n";
+                if(isset($place_data)) echo "place_data: {$place_data},\n";
                 echo "sizes: ".stripslashes($_GET['sizes']).",\n";
                 echo "displayOptions: '{$_GET['display_options']}'\n";
                 ?>
