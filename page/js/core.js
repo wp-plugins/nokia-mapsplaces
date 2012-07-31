@@ -631,7 +631,7 @@ jQuery( document ).ready( function(){
                        revGeoMarker = new nokia.maps.map.StandardMarker(mapCoords);
                        map.objects.add(revGeoMarker);
                        
-                       if (status === 'OK') {
+                       if (status === 'OK' && data) {
                            infoBubbles.addBubble('<div class="nokia-place-bubble geo-loader"></div>',mapCoords);
                           
                            if(revGeoReqId){
