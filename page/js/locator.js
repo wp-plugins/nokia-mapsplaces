@@ -30,27 +30,27 @@ function Locator(params){
 		jQuery.ajax({
 			url:"http://maps.nokia.com/services/iplookup/get?callback=?",
 			dataType:"json",
-			timeout : 1000 //because events are not fired on request error
-		})
-		.error(function(){
-			return self.fail();
-		})
-		.success(function(data){
-			if(data.errors)
+			timeout : 1000, //because events are not fired on request error,
+			error: function(jqXHR, testStatus, errorThrown){
 				return self.fail();
-			
-			if(data.location){
-				data.position = {};
-				data.position.longitude = data.location.longitude;
-				data.position.latitude = data.location.latitude;
-				delete data.location;
-				self.success(data);
-				
-				if(self.map){
-					self.map.setZoomLevel(9);
+			},
+			success: function(data, textStatus, jqXHR){
+				if(data.errors){
+					return self.fail();
 				}
-			}else{
-				return self.fail();
+				if(data.location){
+					data.position = {};
+					data.position.longitude = data.location.longitude;
+					data.position.latitude = data.location.latitude;
+					delete data.location;
+					self.success(data);
+					
+					if(self.map){
+						self.map.setZoomLevel(9);
+					}
+				}else{
+					return self.fail();
+				}
 			}
 		});
 	}
