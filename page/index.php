@@ -20,12 +20,13 @@ global $wpdb;
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
+    	<meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!--Insert core js and stylesheets -->
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/jquery-ui-1.8.16.custom.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/general.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/disableOptions.css" />
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/wordpress.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/css/wordpress.css" />
 
 <script id="nokia-maps_searchbox" type="text/template">
 	<div module="SearchBox" class="nokia-searchbox">
@@ -92,10 +93,7 @@ global $wpdb;
 
 
 	<script src="http://api.maps.nokia.com/2.2.1/jsl.js?with=places,maps" type="text/javascript"></script>
-		<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
-		<script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/locator.js"></script>
+		
 
     </head>
     <body>
@@ -198,6 +196,10 @@ global $wpdb;
             
         </div>
     </div>
-
+	
+	<script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
+	<script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/locator.js"></script>
+    <script type="text/javascript" src="<?php echo get_option('siteurl') ?>/wp-content/plugins/nokia-mapsplaces/page/js/core.js"></script>
+	
 </body>
 </html>

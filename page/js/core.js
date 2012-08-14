@@ -8,7 +8,7 @@
 * Inserts place shortcode to the editor 
 *
 */
-jQuery( document ).ready( function(){
+(function(){
 
     nokia.places.settings.setAppContext({appId: 'uk8iCZheHETM0B63cPxG', authenticationToken: 'TGtRnNzFDZkZ1dRJaKvdTQ'});  //remove
 
@@ -905,5 +905,5 @@ jQuery( document ).ready( function(){
         setLayout.call(jQuery('#layoutOptions li#layoutBasic')[0]);
     }
     
-});
+}());
 //end of document ready
