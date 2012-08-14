@@ -39,15 +39,18 @@ function Locator(params){
 			if(data.errors)
 				return self.fail();
 			
-			data.position = {};
-			data.position.longitude = data.location.longitude;
-			data.position.latitude = data.location.latitude;
-			delete data.location;
-			
-			self.success(data);
-			
-			if(self.map){
-				self.map.setZoomLevel(9);
+			if(data.location){
+				data.position = {};
+				data.position.longitude = data.location.longitude;
+				data.position.latitude = data.location.latitude;
+				delete data.location;
+				self.success(data);
+				
+				if(self.map){
+					self.map.setZoomLevel(9);
+				}
+			}else{
+				return self.fail();
 			}
 		});
 	}
@@ -193,12 +196,12 @@ function Locator(params){
 
 	//////////////////// End Methods /////////////////////
 
-	self.attachMethod = function(fn,order){
+	this.attachMethod = function(fn,order){
 		if(order)
 			self.methods.splice(order,0,fn);
 		else
 			self.methods.push(fn);
-	}
+	};
 
 	this.success = function(data){
 		/*
