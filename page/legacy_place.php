@@ -13,6 +13,10 @@ if ((false === isset($_GET['placeid']) && false === isset($_GET['place_data'])) 
     wp_die(__("Not enough data"));
 }
 
+foreach( $_GET as $key => $param){
+       $_GET[$key] = strip_tags($param);
+}
+
 preg_match("#'width':\s?'(\d+)','height':\s?'(\d+)'#", stripslashes($_GET['sizes']), $size);
 
 if($_GET['place_data_params']){
@@ -20,7 +24,7 @@ if($_GET['place_data_params']){
     for($i = 1; $i <= $_GET['place_data_params']; $i++){
         $place_data .= $_GET['place_data_'.$i];
     }
-    $place_data = stripslashes($place_data);
+    $place_data = str_replace("'","\"",$place_data);
 }
 
 
@@ -52,9 +56,9 @@ if($_GET['place_data_params']){
             var data = {
                 <?php
                 if($_GET['placeid']) echo "placeId: '{$_GET['placeid']}',\n";
-                if($place_data) echo "place_data: {$place_data},\n";
+                if($place_data) echo "place_data: jQuery.parseJSON('{$place_data}'),\n";
                 echo "template: '{$_GET['template']}',\n";
-                echo "sizes: ".stripslashes($_GET['sizes']).",\n";
+                echo "sizes: jQuery.parseJSON('".str_replace("'","\"",$_GET['sizes'])."'),\n";
                 echo "displayOptions: '{$_GET['display_options']}'\n";
                 ?>
             }
