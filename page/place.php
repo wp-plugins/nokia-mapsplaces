@@ -17,8 +17,11 @@ foreach( $_GET as $key => $param){
 	$_GET[$key] = strip_tags($param);
 }
 
+$number_of_params = intval($_GET['place_data_params']);
+$number_of_params = ($number_of_params > 10) ? 10 : $number_of_params; //narrowing number of params to 50 (used by legacy places only)
+
 if($_GET['place_data_params']){
-    for($i = 1; $i <= $_GET['place_data_params']; $i++){
+    for($i = 1; $i <= $number_of_params; $i++){
         $place_data .= $_GET['place_data_'.$i];
     }
     $place_data = str_replace("'","\"",$place_data);
