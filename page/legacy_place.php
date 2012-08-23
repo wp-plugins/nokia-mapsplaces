@@ -18,7 +18,7 @@ foreach( $_GET as $key => $param){
 }
 
 $number_of_params = intval($_GET['place_data_params']);
-$number_of_params = ($number_of_params > 10) ? 10 : $number_of_params; //narrowing number of params to 50 (used by legacy places only)
+$number_of_params = ($number_of_params > 10) ? 10 : $number_of_params; //narrowing number of params to 10 (used by legacy places only)
 
 if($_GET['place_data_params']){
     for($i = 1; $i <= $number_of_params; $i++){
