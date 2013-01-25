@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   Plugin Name: Nokia Maps Places
   Plugin URI: http://wordpress.org/extend/plugins/nokia-mapsplaces/
   Description: With this plugin you are able to add a places and addresses into a post or a page.
-  Version: 1.6.1
+  Version: 1.6.3
   Author: Nokia Corporation
   Author Email: radoslaw.adamczyk@nokia.com
   License: BSD License
