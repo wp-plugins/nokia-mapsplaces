@@ -22,10 +22,14 @@ class nokia_places_core {
     }
 
     function placesApi_media_button($context) {
+    
+    	global $wp_version;
+    
         $path = nokiaplaces_url();
         
+        $placesApi_media_button = "";
         $placesApi_media_button_image = $this->path . 'content/favicon.png';
-        $placesApi_media_button = ' %s' . "<a id='add_place' onclick='switch_tb_position();' href='{$path}/page/index.php?height=500&width=970&TB_iframe=true' class='thickbox' alt='foo' title='Add a map - Powered by Nokia'><img src='" . $placesApi_media_button_image . "' /></a>";
+        $placesApi_media_button = "<a id='add_place' onclick='switch_tb_position();' href='{$path}/page/index.php?height=500&width=970&TB_iframe=true' class='thickbox' alt='foo' title='Add a map - Powered by Nokia'><img src='" . $placesApi_media_button_image . "' /></a>";
         
         $tb_position = "
             <script type='text/javascript'>
@@ -58,19 +62,33 @@ class nokia_places_core {
                 }
             </script>
             ";            
-
+		
+		if ( $wp_version < 3.5 ) {
+			$placesApi_media_button = ' %s' . $placesApi_media_button;
+			return sprintf($context, $placesApi_media_button.$tb_position);
+		}else{
+			echo $placesApi_media_button;
+		}
         
         
-        return sprintf($context, $placesApi_media_button.$tb_position);
+        
     }
 
     function add_nokiaplaces_core() {
+    	
+    	global $wp_version;
+    
         // Don't bother doing this stuff if the current user lacks permissions
         if (!current_user_can('edit_posts') && !current_user_can('edit_pages')){
             return;
         }
-
-        add_action('media_buttons_context', array(&$this, 'placesApi_media_button'));
+		
+		if ( $wp_version < 3.5 ) {
+			add_action('media_buttons_context', array(&$this, 'placesApi_media_button'));
+		}else{
+			add_action('media_buttons', array(&$this, 'placesApi_media_button'), 100);
+		}
+        
     }
 
 }
