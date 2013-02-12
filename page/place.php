@@ -32,7 +32,6 @@ if($_GET['place_data_params']){
 <html>
     <head>
         <!--Insert unique frameid for resize function -->
-        <meta id="iframeid" content="<?php echo $_GET['iframeid'] ?>"/>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 
@@ -116,7 +115,7 @@ if($_GET['place_data_params']){
 			}
             
             if('auto' === data.sizes.width){
-                var iframeid = document.getElementById('iframeid').getAttribute('content');
+                var iframeid = "<?php echo $_GET['iframeid'] ?>";
                 var placesIframe = parent.document.getElementById('places_api_view'+iframeid);
                 if(placesIframe){
                     data.sizes.width = placesIframe.offsetWidth;

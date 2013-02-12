@@ -32,8 +32,6 @@ if($_GET['place_data_params']){
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-        <!--Insert unique frameid for resize function -->
-        <meta id="iframeid" content="<?php echo $_GET['iframeid'] ?>"/>
         <script src='<?php echo get_option('siteurl') ?>/wp-includes/js/jquery/jquery.js'></script>
 
         <script type="text/javascript" src="http://api.maps.nokia.com/places/beta3/jsPlacesAPI.js"></script>
@@ -64,7 +62,7 @@ if($_GET['place_data_params']){
             }
 
             if('auto' === data.sizes.width){
-                var iframeid = document.getElementById('iframeid').getAttribute('content');
+                var iframeid = "<?php echo $_GET['iframeid'] ?>";
                 var placesIframe = parent.document.getElementById('places_api_view'+iframeid);
                 if(placesIframe){
                     data.sizes.width = placesIframe.offsetWidth;
