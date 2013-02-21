@@ -47,7 +47,7 @@ function getUrlParams(){
 	for(var i=0, l=querySplit.length; i<l ;i++){
 		single = querySplit[i];
 		singleSplit = single.split("=");
-		params[singleSplit[0].toLowerCase()] = singleSplit[1] ? decodeURIComponent(singleSplit[1].replace(/\+/g," ")) : "";
+		params[singleSplit[0].toLowerCase()] = singleSplit[1] ? decodeURIComponent(singleSplit[1].replace(/\+/g," ")).replace("&amp;","&") : "";
 	}
 	
 	return params;
@@ -74,8 +74,11 @@ var $GET = getUrlParams(),
 
 if(data.href){
 	separator = data.href.match(/\?/) ? "&" : "?";
-	data.href = data.href + separator + appCodeData;
+	if(data.href.indexOf("app_id") === -1 && data.href.indexOf("app_code") === -1){
+		data.href = data.href + separator + appCodeData;	
+	}
 }
+
   
 if('auto' === data.sizes.width){
     if(placesIframe){
