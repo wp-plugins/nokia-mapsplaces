@@ -131,8 +131,8 @@ var loadPlace = function(){
 				        initWidget(data.place_data); 
                     }else{
 						if ($GET['latitude'] && $GET['longitude']) {
-							respData.location.position.latitude = $GET['latitude'];
-							respData.location.position.longitude = $GET['longitude'];
+							respData.location.position.latitude = parseFloat($GET['latitude']);
+							respData.location.position.longitude = parseFloat($GET['longitude']);
 						}
 						if($GET['name']){
 							respData.name = $GET['name'];	
@@ -147,8 +147,8 @@ var loadPlace = function(){
 	}else{
 
 		var coords = {
-			latitude: $GET['latitude'],
-			longitude: $GET['longitude']
+			latitude: parseFloat($GET['latitude']),
+			longitude: parseFloat($GET['longitude'])
 		};
 
 		var title = $GET['title'];
