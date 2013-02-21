@@ -97,10 +97,7 @@ function nokia_place_shortcode($atts, $c) {
     $str = http_build_query($atts);
     preg_match("#height':\s?'(\d+)'#", $atts['sizes'], $size);
     
-    if ($atts['placeid'] || $atts['href'] || ($atts['latitude'] && $atts['longitude']))
-		$insert_code = create_nokia_places_post($str, $size[1]);
-   	
-    return $insert_code;
+    return create_nokia_places_post($str, $size[1]);
 }
 
 add_shortcode('nokia-maps', 'nokia_place_shortcode');
