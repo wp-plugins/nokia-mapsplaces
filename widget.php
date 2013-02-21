@@ -50,10 +50,6 @@ class NokiaMapsPlacesWidget extends WP_Widget {
             
             $path = nokiaplaces_url();
             ?>
-            <p>
-                <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
-                <a id='add_place' onclick="switch_tb_position()" style="text-decoration: none;" <?php echo $thinbox; ?> href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' title='Add a map - Powered by Nokia' class="thickbox"><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
-            </p>
             <script type='text/javascript'>
                 function switch_tb_position(){
                     var old_tb_position = tb_position;
@@ -83,6 +79,10 @@ class NokiaMapsPlacesWidget extends WP_Widget {
                     };
                 }
             </script>
+            <p>
+                <input id="<?php echo $this->get_field_id('placeData'); ?>" name="<?php echo $this->get_field_name('placeData'); ?>" type="hidden" value="<?php echo $placeData; ?>" />
+                <a id='add_place' onclick="switch_tb_position()" style="text-decoration: none;" <?php echo $thinbox; ?> href='<?php echo $path; ?>/page/index.php?widgetMode=<?php echo $this->get_field_id('placeData'); ?>&TB_iframe=true&height=500&width=660' title='Add a map - Powered by Nokia' class="thickbox"><input id="addPlace" class="button-primary" type="button" value="Choose a place" name="addPlace"></a>
+            </p>
             <?php 
 	}
         

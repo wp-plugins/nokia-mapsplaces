@@ -98,10 +98,8 @@ function nokia_place_shortcode($atts, $c) {
     preg_match("#height':\s?'(\d+)'#", $atts['sizes'], $size);
     
     if ($atts['placeid'] || $atts['href'] || ($atts['latitude'] && $atts['longitude']))
-	$insert_code = create_nokia_places_post($str, $size[1]);
-    else
-	$insert_code = create_nokia_places_legacy_post($str, $size[1]);
-    
+		$insert_code = create_nokia_places_post($str, $size[1]);
+   	
     return $insert_code;
 }
 
@@ -117,13 +115,7 @@ add_shortcode('nokia-maps', 'nokia_place_shortcode');
 function create_nokia_places_post($query, $height) {
     //Replace shortcode with div+js core
     $frame_id = md5($query);
-    return "<iframe id='places_api_view{$frame_id}' frameborder='no' scrolling='no' height='{$height}' width='100%' src='".get_option('siteurl')."/wp-content/plugins/nokia-mapsplaces/page/place.php?{$query}&amp;iframeid={$frame_id}'>IFRAMES not supported</iframe>";
-}
-
-function create_nokia_places_legacy_post($query, $height) {
-    //Replace shortcode with div+js core
-    $frame_id = md5($query);
-    return "<iframe id='places_api_view{$frame_id}' frameborder='no' scrolling='no' height='{$height}' width='100%' src='".get_option('siteurl')."/wp-content/plugins/nokia-mapsplaces/page/legacy_place.php?{$query}&amp;iframeid={$frame_id}'>IFRAMES not supported</iframe>";
+    return "<iframe id='places_api_view{$frame_id}' frameborder='no' scrolling='no' height='{$height}' width='100%' src='".get_option('siteurl')."/wp-content/plugins/nokia-mapsplaces/page/place.html?{$query}&amp;iframeid={$frame_id}'>IFRAMES not supported</iframe>";
 }
 
 

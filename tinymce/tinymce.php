@@ -62,10 +62,12 @@ class nokia_places_core {
                 }
             </script>
             ";            
+		//print script to change thick box position
+		echo $tb_position;
 		
 		if ( $wp_version < 3.5 ) {
 			$placesApi_media_button = ' %s' . $placesApi_media_button;
-			return sprintf($context, $placesApi_media_button.$tb_position);
+			return sprintf($context, $placesApi_media_button);
 		}else{
 			echo $placesApi_media_button;
 		}
