@@ -10,7 +10,7 @@ function Locator(params){
 	
 	if(params){
 		if(params.map){
-			this.map = params.map
+			this.map = params.map;
 		}
 	}
     
@@ -28,7 +28,7 @@ function Locator(params){
 	{
 		//logMessage("Trying IP Lookup");		
 		jQuery.ajax({
-			url:"http://maps.nokia.com/services/iplookup/get?callback=?",
+			url:"http://here.com/services/iplookup/get?callback=?",
 			dataType:"json",
 			timeout : 1000, //because events are not fired on request error,
 			error: function(jqXHR, testStatus, errorThrown){
@@ -209,11 +209,12 @@ function Locator(params){
 		*	data is an object, which could have position, or boundingBox properties, and their associated child properties
 		*/
 		
-		if(this.located)
+		if(this.located) {
 			return;
-		else
-			this.located = true;
-			
+		} else {
+ 			this.located = true;
+		}
+		
 		if(data.boundingBox){
 			//logMessage("FOUND A BBOX");
 			if(self.map){				
@@ -232,11 +233,11 @@ function Locator(params){
 			}
 		}
 		if(onComplete)onComplete(data);
-	}
+	};
 
 	this.fail = function(){
 		self.next();
-	}
+	};
 	
 	this.locate = function(params){
 		if(params){
@@ -244,7 +245,7 @@ function Locator(params){
 				onComplete = params.onComplete;
 		}
 		self.next();
-	}
+	};
 
 	this.next = function(){
 		if(self.methods.length){
@@ -253,5 +254,5 @@ function Locator(params){
 		{
 			logMessage("All available methods failed");
 		}
-	}
+	};
 };

@@ -92,7 +92,7 @@ global $wpdb;
 </script>
 
 
-	<script src="http://api.maps.nokia.com/2.2.1/jsl.js?with=places,maps" type="text/javascript"></script>
+	<script src="http://js.api.here.com/se/2.5.3/jsl.js?with=places,maps" type="text/javascript"></script>
 		
 
     </head>
