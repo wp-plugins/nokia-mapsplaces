@@ -19,7 +19,7 @@ var templateOffsets = {
             y: 0
         }
     },
-	
+
 	"nokia.blue.compact": {
         place:{
             x: 0,
@@ -38,18 +38,20 @@ function getUrlParams(){
 		querySplit,
 		single,
 		singleSplit,
+		value,
 		params = {};
 	if(query.charAt(0) === "?"){
 		query = query.substr(1, query.length);
 	}
-	
+
 	querySplit = query.split("&");
 	for(var i=0, l=querySplit.length; i<l ;i++){
 		single = querySplit[i];
 		singleSplit = single.split("=");
-		params[singleSplit[0].toLowerCase()] = singleSplit[1] ? decodeURIComponent(singleSplit[1].replace(/\+/g," ")).replace("&amp;","&") : "";
+		value = singleSplit[1] ? decodeURIComponent(singleSplit[1].replace(/\+/g," ")).replace("&amp;","&") : "";
+		params[singleSplit[0].toLowerCase()] = jQuery('<span/>').text(value).html();
 	}
-	
+
 	return params;
 }
 
@@ -75,11 +77,11 @@ var $GET = getUrlParams(),
 if(data.href){
 	separator = data.href.match(/\?/) ? "&" : "?";
 	if(data.href.indexOf("app_id") === -1 && data.href.indexOf("app_code") === -1){
-		data.href = data.href + separator + appCodeData;	
+		data.href = data.href + separator + appCodeData;
 	}
 }
 
-  
+
 if('auto' === data.sizes.width){
     if(placesIframe){
         data.sizes.width = placesIframe.offsetWidth;
@@ -91,7 +93,7 @@ if(place_data_params > 0){
 	for(var i=1; i<=place_data_params; i++){
 		place_data += $GET['place_data_' + i];
 	}
-	
+
 	data.place_data = jQuery.parseJSON(place_data);
 }
 
@@ -110,7 +112,7 @@ function initWidget(placeData) {
 		onReady: function(){
 			place.setData(placeData);
 		},
-		onRender: function(){ 
+		onRender: function(){
 		    jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-compact,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('width', data.sizes.width+'px')
 		    jQuery('#content .nokia-places-blue-extended,#content .nokia-places-blue-extended .nokia-places-blue-map .nokia-place-map-container,#content .nokia-places-blue-map,#content .nokia-places-blue-place,#content .nokia-places-blue-place .nokia-place-map-container').css('height', data.sizes.height+'px')
 		    jQuery('#content .nokia-places-blue-map .nokia-place-map-container,#content .nokia-place-extended-details-container,#content .nokia-places-blue-compact').css('height', data.sizes.height+'px')
@@ -131,21 +133,21 @@ var loadPlace = function(){
 			onComplete: function(respData, status){
 				if(status === 'OK'){
 				    if(data.place_data){
-				        initWidget(data.place_data); 
+				        initWidget(data.place_data);
                     }else{
 						if ($GET['latitude'] && $GET['longitude']) {
 							respData.location.position.latitude = parseFloat($GET['latitude']);
 							respData.location.position.longitude = parseFloat($GET['longitude']);
 						}
 						if($GET['name']){
-							respData.name = $GET['name'];	
+							respData.name = $GET['name'];
 						}
                         initWidget(respData);
 		            }
-			    }   
+			    }
 
 			}
-        
+
     	});
 	}else{
 
@@ -155,7 +157,7 @@ var loadPlace = function(){
 		};
 
 		var title = $GET['title'];
-		
+
 		var pureCoords = {};
         pureCoords.location = {};
         pureCoords.location.position = coords;

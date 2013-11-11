@@ -58,7 +58,7 @@
             'description',
             'controls'
         ]
-    };
+    }
     
     var sizes = [
             {width: 'auto', height: 370, label: 'Use blog size'}
@@ -116,7 +116,7 @@
         var container = jQuery('#placeWidgetContainer');
         if(true === this.checked){
             container.removeClass(className);
-            return;
+            return
         }
         container.addClass(className);
     }
@@ -137,7 +137,7 @@
                     retValue += "'"+key+"': " +renderJSON(obj[key]) + ",";
                 } else {
                     if('string' === typeof obj[key]){
-                        obj[key] = obj[key].replace(/'/g, "\\\\\\'");
+                        obj[key] = obj[key].replace(/'/g, "\\\\\\'")
                     }
                     retValue += "'"+key + "': " + "'"+obj[key]+"',";
                 }
@@ -189,7 +189,7 @@
             template: activeTemplate,
             sizes:  size,
             display_options: getDisabledDisplayOptions()
-        };
+        }
 		
         // Now href should be given precedence
         if(currentHref){
@@ -237,7 +237,7 @@
     }
 
     function closeOverlayWindow(){
-        return parent.tb_remove();
+        return parent.tb_remove()
     }
 	
 	function getTileTypeText(mapType) {
@@ -253,7 +253,7 @@
 				checkbox = jQuery('.checkboxContainer input[value=' + options[i] + ']')[0];
 				if(checkbox){
 					checkbox.checked = true;
-					toogleDisplayOption.call(checkbox);
+					toogleDisplayOption.call(checkbox)
 				}
 			}
 	}
@@ -295,7 +295,7 @@
 					}
 				}
 
-		};
+		}
 	
         var activeId = jQuery('#layoutOptions li.active')[0].id;
         jQuery('#placeWidgetContainer').removeClass(activeId);
@@ -379,7 +379,7 @@
             el.innerHTML = sizes[i].label ? sizes[i].label : sizes[i].width + 'x' + sizes[i].height;
             jQuery('#fixedSizes')[0].appendChild(el);
             
-            jQuery(el).bind('click', activateSize);
+            jQuery(el).bind('click', activateSize)
         }
     }
 
@@ -514,7 +514,7 @@
     
     function openBubble(place, atCoords, isPureCoords){
         atCoords = atCoords || new nokia.maps.geo.Coordinate(place.position.latitude, place.position.longitude, null, true);
-        var bubble = infoBubbles.openBubble(' ', atCoords);
+        var bubble = infoBubbles.addBubble('', atCoords);
         var contentNode = bubble.contentNode;
         if(!contentNode){
             contentNode = infoBubbles.findElement("ovi_mp_bubble_content");
@@ -526,7 +526,7 @@
                 rel: 'select-lnk',
                 name: 'click',
                 handler: function(place){
-                    setPlaceData(place, atCoords, isPureCoords);
+                    setPlaceData(place, atCoords, isPureCoords)
                 }
             },{
                 rel: 'zoom-lnk',
@@ -593,10 +593,7 @@
 		// Try to position a map
 		map.set("minZoomLevel", 3);
 		var l = new Locator({map:map});
-		map.addListener("displayready", function(){
-		  l.locate();    
-		});
-		
+		l.locate();
 		jQuery('#map').removeClass('hidden');
 		
 		// Re-create placeWidget whenever user chooses tile type to have initial widget tiling according to user's choice
@@ -635,7 +632,7 @@
                        map.objects.add(revGeoMarker);
                        
                        if (status === 'OK' && data) {
-                           infoBubbles.openBubble('<div class="nokia-place-bubble geo-loader"></div>',mapCoords);
+                           infoBubbles.addBubble('<div class="nokia-place-bubble geo-loader"></div>',mapCoords);
                           
                            if(revGeoReqId){
                                nokia.places.comm.data.abortRequest(revGeoReqId);
@@ -664,15 +661,15 @@
                                        addMarkerEvents(revGeoMarker,coordsPlace);
                                    }
                                }
-                           });
+                           })
                        }else{
                            openBubble(coordsPlace, mapCoords, true);
                            addMarkerEvents(revGeoMarker,coordsPlace);
                        }
                    }
-               });
+               })
 		   }
-		});
+		})
 		
         map.addObserver('zoomLevel',function(map, propName, val){
            handleZoomInLink(val);
@@ -800,7 +797,7 @@
                 return {
                     latitude: 52.516274,
                     longitude: 13.377678
-                };
+                }
             },
             onSearchStart: function(){
                 jQuery("#resultList").removeClass('hidden').addClass('loading');
@@ -886,7 +883,7 @@
         }else{
             isTitleChanged = false;
         }
-    });
+    })
     
     jQuery('.checkboxContainer input').bind('change', toogleDisplayOption);
     jQuery('#layoutOptions li').bind('click', setLayout);
