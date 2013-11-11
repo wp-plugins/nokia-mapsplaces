@@ -3,7 +3,7 @@ Contributors: Skowron, radek.adamczyk, marekkrysiuk, time4ostry
 Tags: geo, location, maps, mapping, nokia, cross-browser, widget, places, nokia maps, address
 Requires at least: 3.1
 Tested up to: 3.5.1
-Stable tag: 1.6.5
+Stable tag: 1.6.6
 
 With Nokia Maps & Places plugin you can easily add places and addresses into your Wordpress posts or pages.
 
@@ -38,7 +38,7 @@ http://www.youtube.com/watch?v=ukEc8TDd2iQ
 == Installation ==
 Just follow one of procedures described [here](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins). We recommend using [WordPress built-in installer](http://codex.wordpress.org/Administration_Panels#Add_New_Plugins). Remember to activate a plugin once it is installed.
 
-Note: when upgrading a plugin make sure you deactivate and then remove existing plugin version using [Plugins Panel](http://codex.wordpress.org/Administration_Panels#Plugins) in the [Administration Panels](http://codex.wordpress.org/Administration_Panels) of your WordPress site or manually, as described [here](http://codex.wordpress.org/Managing_Plugins#Uninstalling_Plugins). 
+Note: when upgrading a plugin make sure you deactivate and then remove existing plugin version using [Plugins Panel](http://codex.wordpress.org/Administration_Panels#Plugins) in the [Administration Panels](http://codex.wordpress.org/Administration_Panels) of your WordPress site or manually, as described [here](http://codex.wordpress.org/Managing_Plugins#Uninstalling_Plugins).
 
 == Screenshots ==
 
@@ -58,9 +58,9 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 * Performance improvements for place display
 * Place search popup fix
 * Other bugfixes
-= 1.6.4 = 
+= 1.6.4 =
 * Bugfixes
-= 1.6.3 = 
+= 1.6.3 =
 * Compatibility fix. Plugin is now compatible with newest wordpress versions.
 = 1.6.2 =
 * Bugfixes and improvements
@@ -85,13 +85,13 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 * Instant zooming to cities, countries and administration areas when searched
 * Increasing Thickbox window and map size
 * Introducing place title change
-* Tile type on "Customize your map" set according to tile type on "Search for the place or address" 
-* Improved support for legacy addresses 
+* Tile type on "Customize your map" set according to tile type on "Search for the place or address"
+* Improved support for legacy addresses
 * Fixed layout issues
 = 1.4.0 =
 * Nokia Maps API (2.2.0) used to generate Map and Places information
 * Introducing common identifier for both Places and Addresses (href parameter in shortcode)
-* Zoom level and tile type are persistent (during place layout selection, changing zoom level or tile type will reflect in final Place/Address display) 
+* Zoom level and tile type are persistent (during place layout selection, changing zoom level or tile type will reflect in final Place/Address display)
 * Fixed Layout issues for place/address selection wizard
 * Templates for place/address selection wizard are part of the plugin bundle
 * Numbers added to result list items will reflect the numbered pins shown on the map
@@ -106,7 +106,7 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 * Bug fixes.
 = 1.0.2 =
 * Fixed iframe url on frontend side - always use get_option('siteurl')
-* New labels for Add place popup: display options (Customize your map) 
+* New labels for Add place popup: display options (Customize your map)
 = 1.0.1 =
 * Remove unused tinymce/colorbox
 * Remove unnecessary wp_enqueue_script from nokia-mapsplaces.php to fix failing placesapi GET requests
