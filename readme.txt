@@ -54,6 +54,8 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 10. Show public transport information in a widget
 
 == Changelog ==
+= 1.6.6 =
+* Bugfixes
 = 1.6.5 =
 * Performance improvements for place display
 * Place search popup fix
