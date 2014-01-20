@@ -75,7 +75,6 @@ add_filter('tiny_mce_before_init', 'add_iframe');
 function nokia_place_shortcode($atts, $c) {
     $map = array(
         'placeid' => '',
-		'href' => '',
         'place_data_params' => '',
         'template' => '',
         'sizes' => '',
@@ -92,6 +91,11 @@ function nokia_place_shortcode($atts, $c) {
             $map['place_data_'.$i] = '';
         }
     }
+
+	//extract place identifier from the url
+	preg_match('([\w\d]{8}-[\w\d]{32}[;context=\w\d]*)', $atts['href'], $matches);
+	$atts['placeid'] = $matches[0];
+	unset($atts['href']);
 
     $atts = shortcode_atts($map, $atts);
     $str = http_build_query($atts);

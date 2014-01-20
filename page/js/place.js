@@ -64,7 +64,7 @@
   		template: $GET['template'],
           appId: 'uk8iCZheHETM0B63cPxG',
           authenticationToken: 'TGtRnNzFDZkZ1dRJaKvdTQ',
-  		href: $GET['href'],
+  		href: '',
   		placeId: $GET['placeid'],
   		sizes: $GET['sizes'] ? jQuery.parseJSON($GET['sizes'].replace(/\'/g,"\"")) : "",
   		displayOptions: $GET['display_options'],
@@ -128,10 +128,9 @@
       }
       nokia.places.settings.setAppContext({appId: data.appId, authenticationToken: data.authenticationToken});  //remove
 
-  	if(data.href || data.placeId){
+  	if(data.placeId){
   		nokia.places.manager.getPlaceData({
   			placeId: data.placeId,
-  			href: data.href,
   			onComplete: function(respData, status){
   				if(status === 'OK'){
   				    if(data.place_data){
