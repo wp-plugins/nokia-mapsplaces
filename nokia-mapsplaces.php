@@ -93,8 +93,18 @@ function nokia_place_shortcode($atts, $c) {
     }
 
 	//extract place identifier from the url
-	preg_match('([\w\d]{8}-[\w\d]{32}[;context=\w\d]*)', $atts['href'], $matches);
-	$atts['placeid'] = $matches[0];
+	if(!isset($atts['placeid'])){
+		//try to find place id
+		preg_match('([\w\d]{8}-[\w\d]{32}[;context=\w\d]*)', $atts['href'], $matches);
+		if(!isset($matches[0])){
+			//try to find the 'loc' id (for addresses)
+			preg_match('(loc-[\w\d]+[;context=\w\d]*)', $atts['href'], $matches);
+			$atts['placeid'] = $matches[0];
+		} else {
+			$atts['placeid'] = $matches[0];
+		}
+	}
+
 	unset($atts['href']);
 
     $atts = shortcode_atts($map, $atts);
