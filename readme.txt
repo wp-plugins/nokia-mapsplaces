@@ -54,6 +54,8 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 10. Show public transport information in a widget
 
 == Changelog ==
+= 1.6.7 =
+* Bugfixes
 = 1.6.6 =
 * Bugfixes
 = 1.6.5 =
