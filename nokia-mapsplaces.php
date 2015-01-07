@@ -21,7 +21,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
   Plugin Name: Nokia Maps Places
   Plugin URI: http://wordpress.org/extend/plugins/nokia-mapsplaces/
   Description: With this plugin you are able to add a places and addresses into a post or a page.
-  Version: 1.6.7
+  Version: 1.7.0
   Author: Nokia Corporation
   Author Email: radoslaw.adamczyk@nokia.com
   License: BSD License
@@ -129,6 +129,17 @@ function create_nokia_places_post($query, $height) {
     return "<iframe id='places_api_view{$frame_id}' frameborder='no' scrolling='no' height='{$height}' width='100%' src='".get_option('siteurl')."/wp-content/plugins/nokia-mapsplaces/page/place.html?{$query}&amp;iframeid={$frame_id}'>IFRAMES not supported</iframe>";
 }
 
-
+function my_admin_notice() {
+  ?>
+  <div class="error">
+    <p>
+      Plugin <b>Nokia Maps &amp; Places</b> in version <i>1.7.0</i> is not supported.<br>
+      We recommend downloading our new plugin - <a href="//wordpress.org/plugins/here-maps">HERE Maps</a>.
+      New plugin will work with old short codes. You won't lose your data.
+    </p>
+  </div>
+<?php
+}
+add_action( 'admin_notices', 'my_admin_notice' );
 
 ?>
