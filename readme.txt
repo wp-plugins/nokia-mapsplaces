@@ -54,6 +54,8 @@ Note: when upgrading a plugin make sure you deactivate and then remove existing 
 10. Show public transport information in a widget
 
 == Changelog ==
+= 1.7.0 =
+End of support Nokia Maps & Places plugin
 = 1.6.7 =
 * Bugfixes
 = 1.6.6 =
